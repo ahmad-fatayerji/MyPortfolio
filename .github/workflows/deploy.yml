@@ -26,7 +26,6 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm run export
 
       # Transfer the static files to the server
       - name: Deploy to server
