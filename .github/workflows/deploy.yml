@@ -1,0 +1,45 @@
+name: Deploy website
+on:
+  push:
+    branches:
+      - production # Change if you are deploying from another branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Use the Node.js version your app requires
+          cache: "npm"
+
+      # Install dependencies and build the app
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
+
+      # Deploy the built static files
+      - name: Deploy to server
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          # Set up SSH key
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Add the server to known_hosts
+          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+
+          # Deploy files using rsync
+          rsync -avz --delete ./out/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
