@@ -54,6 +54,7 @@ jobs:
           source: "out/*" # Ensure this matches the output directory
           target: "/var/www/mywebsite/" # Update with your deployment directory
           rm: true # Remove old files before uploading new ones
+          debug: true
 
       # Step 8: Log Success
       - name: Log Success
