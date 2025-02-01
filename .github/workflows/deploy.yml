@@ -42,4 +42,4 @@ jobs:
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
 
           # Deploy files using rsync
-          rsync -avz --delete ./out/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
+          rsync -avz --delete ./out/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/ --rsync-path="sudo rsync"
