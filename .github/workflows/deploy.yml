@@ -1,4 +1,4 @@
-name: Deploy Next.js Portfolio
+name: Deploy website
 
 on:
   push:
@@ -20,15 +20,7 @@ jobs:
         with:
           node-version: 18 # Use a Node.js version that matches your app requirements
 
-      # Step 3: Debug Environment
-      - name: Debug Environment
-        run: |
-          node -v
-          npm -v
-          echo "Debugging environment variables..."
-          env
-
-      # Step 4: Restore npm Cache
+      # Step 3: Restore npm Cache
       - name: Restore npm Cache
         uses: actions/cache@v3
         with:
@@ -37,42 +29,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-cache-
 
-      # Step 5: Restore Next.js Cache
-      - name: Restore Next.js Cache
-        uses: actions/cache@v3
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
-
-      # Step 6: Install Dependencies
+      # Step 4: Install Dependencies
       - name: Install Dependencies
         run: npm ci # Use npm ci for clean, reproducible installs
 
-      # Step 7: Build Next.js Static Site
+      # Step 5: Build Next.js Static Site
       - name: Build Next.js Static Site
         run: |
           npm run build
-          echo "Build completed. Files in 'out/' directory: "
+          echo "Build completed. Files in 'out/' directory:"
           ls -l out/
 
-      # Step 8: Deploy Static Files to Server
-      - name: Deploy Static Files
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          source: "out/*" # Ensure this matches the output directory
-          target: "/var/www/mywebsite/" # Update with your deployment directory
-          rm: true # Remove old files before uploading new ones
-          debug: true # Enable detailed debug logs
+      # Step 6: Deploy Static Files Using Rsync
+      - name: Deploy Static Files with Rsync
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          echo "${DEPLOY_KEY}" > ~/deploy_key
+          chmod 600 ~/deploy_key
+          rsync -avz -e "ssh -i ~/deploy_key -o StrictHostKeyChecking=no" out/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/mywebsite/
 
-      # Step 9: Verify Deployment
-      - name: Verify Deployment
-        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "ls -l /var/www/mywebsite/"
-
-      # Step 10: Log Success
+      # Step 7: Log Success
       - name: Log Success
         run: echo "Deployment completed successfully"
