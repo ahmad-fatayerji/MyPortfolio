@@ -3,52 +3,39 @@ name: Deploy website
 on:
   push:
     branches:
-      - production # Trigger deployment when pushing to the production branch
+      - production # Adjust the branch name if needed
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout Repository
-      - name: Checkout Repository
+      # Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set Up Node.js
-      - name: Set Up Node.js
+      # Set up Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Use a Node.js version that matches your app requirements
+          node-version: 18 # Use the Node.js version your app requires
+          cache: "npm"
 
-      # Step 3: Restore npm Cache
-      - name: Restore npm Cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-cache-
-
-      # Step 4: Install Dependencies
-      - name: Install Dependencies
-        run: npm ci # Use npm ci for clean, reproducible installs
-
-      # Step 5: Build Next.js Static Site
-      - name: Build Next.js Static Site
+      # Install dependencies and build the app
+      - name: Install dependencies and build
         run: |
+          npm ci
           npm run build
-          echo "Build completed. Files in 'out/' directory:"
-          ls -l out/
+          npm run export
 
-      # Step 6: Deploy Static Files Using Rsync
-      - name: Deploy Static Files with Rsync
+      # Transfer the static files to the server
+      - name: Deploy to server
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" out/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/mywebsite/
-
-      # Step 7: Log Success
-      - name: Log Success
-        run: echo "Deployment completed successfully"
+          rsync -avz --delete ./out/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
