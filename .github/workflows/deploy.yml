@@ -42,12 +42,12 @@ jobs:
 
       # Step 6: Deploy Static Files Using Rsync
       - name: Deploy Static Files with Rsync
-        env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         run: |
-          echo "${DEPLOY_KEY}" > ~/deploy_key
-          chmod 600 ~/deploy_key
-          rsync -avz -e "ssh -i ~/deploy_key -o StrictHostKeyChecking=no" out/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/mywebsite/
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" out/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/mywebsite/
 
       # Step 7: Log Success
       - name: Log Success
