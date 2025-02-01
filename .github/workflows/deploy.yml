@@ -3,7 +3,7 @@ name: Deploy Next.js Portfolio Without Sudo Privileges
 on:
   push:
     branches:
-      - main # Trigger deployment when pushing to the main branch
+      - production # Trigger deployment when pushing to the main branch
 
 jobs:
   deploy:
