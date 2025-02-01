@@ -1,0 +1,40 @@
+name: Deploy Next.js Portfolio Without Sudo Privileges
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment when pushing to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Ensure the Node.js version matches your app's requirements
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Next.js Static Site
+        run: |
+          npm run build
+          npm run export
+
+      - name: Deploy Static Files
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          source: "out/*"
+          target: "/var/www/mywebsite/"
+          rm: true # Remove old files before uploading new ones
+
+      - name: Log Success
+        run: echo "Deployment completed successfully"
