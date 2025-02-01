@@ -3,31 +3,32 @@ name: Deploy website
 on:
   push:
     branches:
-      - production # Adjust the branch name if needed
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Use the Node.js version your app requires
+          node-version: 18
           cache: "npm"
 
-      # Install dependencies and build the app
       - name: Install dependencies and build
         run: |
           npm ci
           npm run build
 
-      # Transfer the static files to the server
+      - name: Debug environment
+        run: |
+          echo "SERVER_IP: $SERVER_IP"
+          echo "SERVER_USER: $SERVER_USER"
+
       - name: Deploy to server
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -37,4 +38,5 @@ jobs:
           mkdir -p ~/.ssh
           echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo 'SSH connection successful'"
           rsync -avz --delete ./out/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
