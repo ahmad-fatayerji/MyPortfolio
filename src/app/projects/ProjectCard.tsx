@@ -1,7 +1,8 @@
 import React from "react";
 import { Project } from "../../types/project";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import clsx from "clsx";
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
@@ -18,9 +19,31 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           </span>
         ))}
       </div>
-      <Button asChild>
-        <Link href={project.link}>Learn more</Link>
-      </Button>
+      <div className="flex space-x-4">
+        <Button asChild>
+          <Link href={project.link}>Learn more</Link>
+        </Button>
+        {project.code ? (
+          <Link
+            href={project.code}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonVariants()}
+          >
+            View code
+          </Link>
+        ) : (
+          <button
+            className={clsx(
+              buttonVariants({ variant: "default" }),
+              "opacity-50 cursor-not-allowed"
+            )}
+            disabled
+          >
+            View code
+          </button>
+        )}
+      </div>
     </div>
   );
 };
