@@ -19,7 +19,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         ))}
       </div>
       <Button asChild>
-        <Link href="/testing">Learn more</Link>
+        <Link href={project.link}>Learn more</Link>
       </Button>
     </div>
   );

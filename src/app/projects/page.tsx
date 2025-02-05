@@ -9,14 +9,14 @@ const projects: Project[] = [
     description:
       "A portfolio website built using Next.js, TailwindCSS, and TypeScript.",
     technologies: ["Next.js", "TailwindCSS", "TypeScript"],
-    link: "https://example.com/portfolio",
+    link: "/testing",
   },
   {
     title: "E-commerce Platform",
     description:
       "An advanced e-commerce platform with secure payments and product management.",
     technologies: ["React", "Node.js", "MongoDB"],
-    link: "https://example.com/ecommerce",
+    link: "/testing",
   },
 ];
 
