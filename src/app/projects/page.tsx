@@ -7,9 +7,10 @@ const projects: Project[] = [
   {
     title: "Next.js Portfolio",
     description:
-      "A portfolio website built using Next.js, TailwindCSS, and TypeScript.",
+      "A portfolio website built using Next.js, TailwindCSS, and TypeScript to showcase my development skills.",
     technologies: ["Next.js", "TailwindCSS", "TypeScript"],
-    link: "/testing",
+    link: "/",
+    code: "https://github.com/ahmad-fatayerji/MyPortfolio",
   },
   {
     title: "E-commerce Platform",
