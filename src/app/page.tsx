@@ -10,7 +10,8 @@ export default function WorkInProgress() {
         </h1>
         {/* Subtitle */}
         <p className="mt-4 text-lg md:text-xl text-muted-foreground">
-          Everything here is subject to change, check back soon.
+          This website is still under development, everything here is subject to
+          change, check back soon!
         </p>
         {/* Animated Loader */}
         <div className="mt-8 flex justify-center">
