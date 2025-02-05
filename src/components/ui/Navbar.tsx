@@ -10,11 +10,23 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background text-foreground shadow-lg z-50">
-      <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between p-4 w-full max-w-7xl mx-auto">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold">
+        <Link href="/" className="text-2xl font-bold whitespace-nowrap">
           Ahmad FATAYERJI
         </Link>
+
+        {/* Mobile Menu Button & Theme Toggle */}
+        <div className="flex items-center md:hidden space-x-4">
+          <ThemeToggle />
+          <button
+            className="text-foreground"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
@@ -29,15 +41,6 @@ const Navbar = () => {
           </Link>
           <ThemeToggle />
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Menu"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
       </div>
 
       {/* Mobile Dropdown Menu */}
@@ -64,9 +67,6 @@ const Navbar = () => {
           >
             Contact
           </Link>
-          <div className="flex justify-center">
-            <ThemeToggle />
-          </div>
         </div>
       )}
     </nav>
