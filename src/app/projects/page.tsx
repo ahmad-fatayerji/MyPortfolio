@@ -23,6 +23,7 @@ const projects: Project[] = [
 export default function ProjectsPage() {
   return (
     <div className="max-w-4xl mx-auto p-6">
+      <div>Note : this is just for testing purposes</div>
       <div className="grid gap-4">
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />
