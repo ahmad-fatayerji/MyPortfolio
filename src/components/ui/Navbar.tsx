@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Menu, X } from "lucide-react"; // Icons for mobile menu
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -18,13 +18,13 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/" className="hover:text-blue-500 transition">
+          <Link href="/" className="hover:text-primary transition">
             Home
           </Link>
-          <Link href="/projects" className="hover:text-blue-500 transition">
+          <Link href="/projects" className="hover:text-primary transition">
             Projects
           </Link>
-          <Link href="/contact" className="hover:text-blue-500 transition">
+          <Link href="/contact" className="hover:text-primary transition">
             Contact
           </Link>
           <ThemeToggle />
@@ -43,18 +43,24 @@ const Navbar = () => {
       {/* Mobile Dropdown Menu */}
       {isOpen && (
         <div className="md:hidden bg-background shadow-md p-4 space-y-3 text-center">
-          <Link href="/" className="block hover:text-blue-500 transition">
+          <Link
+            href="/"
+            className="block hover:text-primary transition"
+            onClick={() => setIsOpen(false)}
+          >
             Home
           </Link>
           <Link
             href="/projects"
-            className="block hover:text-blue-500 transition"
+            className="block hover:text-primary transition"
+            onClick={() => setIsOpen(false)}
           >
             Projects
           </Link>
           <Link
             href="/contact"
-            className="block hover:text-blue-500 transition"
+            className="block hover:text-primary transition"
+            onClick={() => setIsOpen(false)}
           >
             Contact
           </Link>
