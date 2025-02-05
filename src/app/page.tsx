@@ -2,7 +2,7 @@
 
 export default function WorkInProgress() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
+    <div className="flex items-center justify-center min-h-screen text-foreground">
       <div className="text-center">
         {/* Animated Text */}
         <h1 className="text-4xl md:text-6xl font-bold animate-pulse">
