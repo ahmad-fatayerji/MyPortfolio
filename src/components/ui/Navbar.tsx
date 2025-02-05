@@ -3,43 +3,67 @@
 import * as React from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Menu, X } from "lucide-react"; // Icons for mobile menu
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    <div className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-background text-foreground shadow-lg z-50">
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         {/* Logo */}
-        <Link
-          href="/"
-          className="text-2xl font-bold text-gray-900 dark:text-gray-100"
-        >
+        <Link href="/" className="text-2xl font-bold">
           Ahmad FATAYERJI
         </Link>
 
-        {/* Navigation Links */}
-        <div className="flex items-center space-x-6">
-          <Link
-            href="/"
-            className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition"
-          >
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-6">
+          <Link href="/" className="hover:text-blue-500 transition">
+            Home
+          </Link>
+          <Link href="/projects" className="hover:text-blue-500 transition">
+            Projects
+          </Link>
+          <Link href="/contact" className="hover:text-blue-500 transition">
+            Contact
+          </Link>
+          <ThemeToggle />
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-foreground"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle Menu"
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-background shadow-md p-4 space-y-3 text-center">
+          <Link href="/" className="block hover:text-blue-500 transition">
             Home
           </Link>
           <Link
             href="/projects"
-            className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition"
+            className="block hover:text-blue-500 transition"
           >
             Projects
           </Link>
           <Link
             href="/contact"
-            className="text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition"
+            className="block hover:text-blue-500 transition"
           >
             Contact
           </Link>
-          <ThemeToggle />
+          <div className="flex justify-center">
+            <ThemeToggle />
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </nav>
   );
 };
 
