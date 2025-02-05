@@ -1,6 +1,7 @@
 import React from "react";
 import { Project } from "../../types/project";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
@@ -17,15 +18,9 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           </span>
         ))}
       </div>
-      <a
-        href={project.link}
-        className="text-blue-500 hover:underline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn more
-      </a>
-      <Button>Learn more</Button>
+      <Button asChild>
+        <Link href="/testing">Learn more</Link>
+      </Button>
     </div>
   );
 };
