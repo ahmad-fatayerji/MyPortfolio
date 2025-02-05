@@ -13,10 +13,9 @@ const projects: Project[] = [
     code: "https://github.com/ahmad-fatayerji/MyPortfolio",
   },
   {
-    title: "E-commerce Platform",
-    description:
-      "An advanced e-commerce platform with secure payments and product management.",
-    technologies: ["React", "Node.js", "MongoDB"],
+    title: "Interesting Project",
+    description: "Cool project!",
+    technologies: ["C++", "Python", "C#"],
     link: "/testing",
   },
 ];
@@ -24,7 +23,6 @@ const projects: Project[] = [
 export default function ProjectsPage() {
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div>Note : this is just for testing purposes</div>
       <div className="grid gap-4">
         {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />

@@ -28,7 +28,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             href={project.code}
             target="_blank"
             rel="noopener noreferrer"
-            className={buttonVariants()}
+            className={buttonVariants({ variant: "default" })}
           >
             View code
           </Link>
