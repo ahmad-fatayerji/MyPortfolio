@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ReactNode } from "react";
-import Navbar from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+
+import Navbar from "@/components/ui/Navbar";
+import ContactSection from "@/components/ContactSection";
 
 import "@/styles/global.css";
 
@@ -24,15 +26,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           className={`min-h-screen bg-background text-foreground transition-colors duration-300 ${inter.variable}`}
         >
           <div className="flex flex-col min-h-screen">
+            {/* Global Navbar */}
             <Navbar />
+
+            {/* Main Content */}
             <main className="flex-1 container mx-auto p-6 mt-20">
               {children}
             </main>
-            <footer className="bg-card text-card-foreground text-center p-4 rounded-t-2xl shadow-md">
-              <p className="text-sm font-mono">
-                © 2025 Ahmad FATAYERJI. All rights reserved.
-              </p>
-            </footer>
+
+            <ContactSection />
           </div>
         </body>
       </html>
