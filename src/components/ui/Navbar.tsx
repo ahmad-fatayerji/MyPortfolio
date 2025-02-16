@@ -8,6 +8,13 @@ import { Menu, X } from "lucide-react";
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
+  // Smoothly scroll to the Contact section
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Prevent the default anchor jump
+    setIsOpen(false); // Close mobile menu
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background text-foreground shadow-lg z-50">
       <div className="flex items-center justify-between p-4 w-full max-w-7xl mx-auto">
@@ -36,9 +43,14 @@ const Navbar = () => {
           <Link href="/projects" className="hover:text-primary transition">
             Projects
           </Link>
-          <Link href="/contact" className="hover:text-primary transition">
+          {/* Smooth scroll to #contact */}
+          <a
+            href="#contact"
+            onClick={handleContactClick}
+            className="hover:text-primary transition"
+          >
             Contact
-          </Link>
+          </a>
           <ThemeToggle />
         </div>
       </div>
@@ -60,13 +72,14 @@ const Navbar = () => {
           >
             Projects
           </Link>
-          <Link
-            href="/contact"
+          {/* Smooth scroll for mobile menu as well */}
+          <a
+            href="#contact"
+            onClick={handleContactClick}
             className="block hover:text-primary transition"
-            onClick={() => setIsOpen(false)}
           >
             Contact
-          </Link>
+          </a>
         </div>
       )}
     </nav>
