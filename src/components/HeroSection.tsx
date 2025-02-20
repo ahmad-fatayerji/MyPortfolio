@@ -7,12 +7,12 @@ export default function HeroSection() {
     <section className="relative flex flex-col items-center justify-center text-center py-16 px-4 bg-background text-foreground transition-colors duration-300 ease-in-out">
       {/* Main Title */}
       <h1 className="text-4xl md:text-5xl font-bold mb-3">
-        Hi, I’m Ahmad FATAYERJI
+        Hi, I&apos;m Ahmad FATAYERJI
       </h1>
 
       {/* Subtitle */}
       <p className="max-w-2xl text-base md:text-lg text-muted-foreground mb-8">
-        Welcome to my personal website! I’m a developer passionate about
+        Welcome to my personal website! I&apos;m a developer passionate about
         building modern apps and creative projects.
       </p>
 
@@ -40,7 +40,7 @@ export default function HeroSection() {
           <Linkedin className="w-6 h-6" />
         </a>
 
-        {/* Download CV button */}
+        {/* Download CV Button */}
         <a
           href="/Ahmad_FATAYERJI_CV.pdf"
           download
