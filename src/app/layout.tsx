@@ -20,11 +20,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <ThemeProvider>
-      <html lang="en">
-        <body
-          className={`min-h-screen bg-background text-foreground transition-colors duration-300 ${inter.variable}`}
-        >
+    <html lang="en">
+      <body
+        className={`min-h-screen bg-background text-foreground transition-colors duration-300 ${inter.variable}`}
+      >
+        <ThemeProvider>
           <div className="flex flex-col min-h-screen">
             {/* Global Navbar */}
             <Navbar />
@@ -36,8 +36,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
             <ContactSection />
           </div>
-        </body>
-      </html>
-    </ThemeProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
