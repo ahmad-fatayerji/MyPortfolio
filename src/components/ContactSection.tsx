@@ -6,8 +6,7 @@ export default function ContactSection() {
   return (
     <footer
       id="contact"
-      // Added "border" class so "border-muted-foreground" applies properly
-      className="w-full py-4 md:py-6 bg-card text-card-foreground rounded-3xl border border-muted-foreground"
+      className="w-full py-4 md:py-6 bg-card text-card-foreground rounded-3xl border-muted-foreground"
     >
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
         {/* Contact Bar with Rounded Background */}
