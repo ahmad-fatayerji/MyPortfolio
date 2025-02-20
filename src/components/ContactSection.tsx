@@ -4,31 +4,28 @@ import { Mail } from "lucide-react";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-12 md:py-20">
-      {/* Constrain width and center horizontally */}
-      <div className="container mx-auto max-w-3xl px-4">
-        {/* Card-style container matching your theme */}
-        <div className="bg-card text-card-foreground rounded-lg shadow-md p-8 md:p-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            Contact Me
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground text-center mb-6">
-            If you have any questions or want to get in touch, feel free to send
-            me an email.
+    <footer
+      id="contact"
+      className="w-full py-4 md:py-6 bg-card text-card-foreground rounded-3xl border-muted-foreground"
+    >
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
+        {/* Contact Bar with Rounded Background */}
+        <div className="w-full max-w-3xl mx-auto bg-muted/80 backdrop-blur-lg rounded-full py-3 px-6 flex flex-col md:flex-row items-center justify-between shadow-md">
+          {/* Contact Text */}
+          <p className="text-sm md:text-base text-muted-foreground text-center md:text-left">
+            Let's connect! Feel free to reach out.
           </p>
 
-          {/* Row with icon and mailto link */}
-          <div className="flex justify-center items-center space-x-2">
-            <Mail className="w-5 h-5" />
-            <a
-              href="mailto:ahmad.fatayerji2004@gmail.com"
-              className="text-primary font-semibold text-lg md:text-xl hover:underline"
-            >
-              ahmad.fatayerji2004@gmail.com
-            </a>
-          </div>
+          {/* Email Link with Icon */}
+          <a
+            href="mailto:ahmad.fatayerji2004@gmail.com"
+            className="flex items-center space-x-2 text-primary font-medium text-sm md:text-base hover:underline transition-all"
+          >
+            <Mail className="w-4 h-4 md:w-5 md:h-5" />
+            <span>ahmad.fatayerji2004@gmail.com</span>
+          </a>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
