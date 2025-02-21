@@ -3,7 +3,7 @@
 import HeroSection from "@/components/HeroSection";
 import CareerTimeline from "@/components/CareerTimeline";
 
-export default function WorkInProgress() {
+export default function MainPage() {
   return (
     <>
       {/* Hero Section */}
