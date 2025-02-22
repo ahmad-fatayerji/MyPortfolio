@@ -71,25 +71,25 @@
   }
 }
 
-/* Glow effect for light mode */
+/* General Card Styling - No Forced Background */
 .glow-card {
-  background-color: #ffffff !important; /* Pure white */
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Dark glow in light mode */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08); /* Reduced radius, softer shadow */
   transition: all 0.3s ease-in-out;
 }
 
+/* Light Mode Glow (Subtle Bloom Effect) */
 .glow-card:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.2); /* Slightly smaller and softer */
 }
 
-/* Glow effect for dark mode */
+/* Dark Mode - Remove Forced Black Background */
 .dark .glow-card {
-  background-color: #0d0d0d !important; /* Full black */
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* White glow in dark mode */
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1); /* Reduced intensity */
 }
 
+/* Dark Mode Hover Effect - More Controlled Glow */
 .dark .glow-card:hover {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Less intense, blends better */
 }

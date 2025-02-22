@@ -6,7 +6,7 @@ import clsx from "clsx";
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   return (
-    <div className="border rounded-lg p-4 shadow-md bg-background text-foreground transition-colors">
+    <div className="glow-card border rounded-lg p-4 shadow-md bg-background text-foreground transition-colors">
       <h2 className="text-xl font-bold mb-2">{project.title}</h2>
       <p className="text-muted-foreground mb-2">{project.description}</p>
 
