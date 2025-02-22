@@ -5,5 +5,11 @@
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "Framer Motion"],
     "link": "/",
     "code": "https://github.com/ahmad-fatayerji/MyPortfolio"
+  },
+  {
+    "title": "MonBoTablo",
+    "description": "A Java application that processes coordinates to generate tablos using quadtree structures. It also includes a ternary tree variant, offering an alternative way to divide space. The app creates structured visual representations, making it useful for generating tablos and even artistic designs.",
+    "tags": ["Java"],
+    "code": "https://github.com/ahmad-fatayerji/L3-ASD3"
   }
 ]
