@@ -70,3 +70,26 @@
     scroll-behavior: smooth;
   }
 }
+
+/* General Card Styling - No Forced Background */
+.glow-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08); /* Reduced radius, softer shadow */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Light Mode Glow (Subtle Bloom Effect) */
+.glow-card:hover {
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.2); /* Slightly smaller and softer */
+}
+
+/* Dark Mode - Remove Forced Black Background */
+.dark .glow-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1); /* Reduced intensity */
+}
+
+/* Dark Mode Hover Effect - More Controlled Glow */
+.dark .glow-card:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Less intense, blends better */
+}
