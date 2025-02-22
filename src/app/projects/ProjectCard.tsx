@@ -10,15 +10,15 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       <h2 className="text-xl font-bold mb-2">{project.title}</h2>
       <p className="text-muted-foreground mb-2">{project.description}</p>
 
-      {/* Ensure technologies exist before mapping */}
-      {project.technologies && project.technologies.length > 0 && (
+      {/* Ensure tags exist before mapping */}
+      {project.tags && project.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.technologies.map((tech) => (
+          {project.tags.map((tag) => (
             <span
-              key={tech}
+              key={tag}
               className="bg-accent text-accent-foreground px-2 py-1 rounded-full text-sm"
             >
-              {tech}
+              {tag}
             </span>
           ))}
         </div>
