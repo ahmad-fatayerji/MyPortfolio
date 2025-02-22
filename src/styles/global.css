@@ -70,3 +70,26 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Glow effect for light mode */
+.glow-card {
+  background-color: #ffffff !important; /* Pure white */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Dark glow in light mode */
+  transition: all 0.3s ease-in-out;
+}
+
+.glow-card:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Glow effect for dark mode */
+.dark .glow-card {
+  background-color: #0d0d0d !important; /* Full black */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* White glow in dark mode */
+}
+
+.dark .glow-card:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
