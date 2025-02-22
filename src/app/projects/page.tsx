@@ -11,11 +11,8 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const projectsModule = await import("@/data/projects.json");
-        const data = projectsModule.default.map((project: any) => ({
-          ...project,
-          technologies: project.tags || [], // Convert `tags` to `technologies`
-        }));
+        const projectsModule = await import("@/data/projects.json"); // ✅ Corrected import
+        const data: Project[] = projectsModule.default;
         setProjects(data);
       } catch (error) {
         console.error("Error loading projects:", error);
