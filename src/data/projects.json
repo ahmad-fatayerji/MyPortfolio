@@ -1,0 +1,15 @@
+[
+    {
+      "title": "Next.js Website",
+      "description": "A portfolio website built using Next.js, TailwindCSS, and TypeScript.",
+      "tags": ["Next.js", "TailwindCSS", "TypeScript", "Framer Motion"],
+      "link": "https://yourportfolio.com",
+      "code": "https://github.com/your-repo"
+    },
+    {
+      "title": "Interesting Project",
+      "description": "Cool project!",
+      "tags": ["C++", "Python", "C#"]
+    }
+  ]
+  
