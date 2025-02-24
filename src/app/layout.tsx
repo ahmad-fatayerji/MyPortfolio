@@ -16,6 +16,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Ahmad FATAYERJI",
   description: "Ahmad FATAYERJI - Developer in France",
+  icons: {
+    icon: "/af_logo.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
