@@ -14,12 +14,6 @@ const linkUnderlineClass =
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsOpen(false);
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background text-foreground shadow-lg z-50">
       <div className="flex items-center justify-between p-4 w-full max-w-7xl mx-auto">
@@ -48,9 +42,9 @@ export default function Navbar() {
           <Link href="/projects" className={linkUnderlineClass}>
             Projects
           </Link>
-          <a href="#contact" onClick={handleContactClick} className={linkUnderlineClass}>
+          <Link href="/contact" className={linkUnderlineClass}>
             Contact
-          </a>
+          </Link>
           <ThemeToggle />
         </div>
       </div>
@@ -110,13 +104,13 @@ export default function Navbar() {
                 Projects
               </Link>
 
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className={`text-lg font-medium ${linkUnderlineClass}`}
-                onClick={handleContactClick}
+                onClick={() => setIsOpen(false)}
               >
                 Contact
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
         )}
