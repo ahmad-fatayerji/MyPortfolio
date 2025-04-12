@@ -22,13 +22,13 @@ export default function ContactPage() {
       </motion.h1>
 
       <div className="glow-card border rounded-2xl px-6 py-8 sm:p-10 bg-background text-foreground shadow-md transition-colors space-y-6">
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-          className="text-muted-foreground text-center text-sm sm:text-base"
+            <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+        className="text-muted-foreground text-center text-sm sm:text-base"
         >
-          Let's connect! Feel free to reach out.
+        Let&apos;s connect! Feel free to reach out.
         </motion.p>
 
         <motion.div
