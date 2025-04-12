@@ -19,15 +19,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
+          cache: 'npm'
 
       # Install dependencies and build the app
       - name: Install dependencies and build
         run: |
-          npm ci
+          npm install
           npm run build
 
-      # Deploy to server for SSR (next start)
+      # Deploy production-ready build to server
       - name: Deploy to server
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -38,14 +38,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-          # Add the server to known_hosts
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
 
-          # Deploy necessary files to server
+          # Deploy only what's needed for `next start`
           rsync -avz --delete .next/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/.next/
           rsync -avz public/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/public/
-          rsync -avz package.json $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
-          rsync -avz next.config.ts $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
           rsync -avz node_modules/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/node_modules/
-
+          rsync -avz package.json $SERVER_USER@$SERVER_IP:/var/www/mywebsite/package.json
+          rsync -avz next.config.* $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
