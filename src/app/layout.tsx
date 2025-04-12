@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import Navbar from "@/components/ui/Navbar";
-import ContactSection from "@/components/ContactSection";
+// import ContactSection from "@/components/ContactSection"; legacy contact section
 
 import "@/styles/global.css";
 
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               {children}
             </main>
 
-            <ContactSection />
+            {/* <ContactSection /> */}
           </div>
         </ThemeProvider>
       </body>
