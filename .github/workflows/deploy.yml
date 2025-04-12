@@ -19,12 +19,7 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
-
-      - name: Deploy and restart on server
+      - name: Deploy and build on server
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
@@ -36,15 +31,19 @@ jobs:
           ssh_cmd="ssh -i private_key.pem -o StrictHostKeyChecking=no"
           remote_dir="/var/www/mywebsite"
 
-          echo "📦 Syncing files to $SERVER_IP:$remote_dir..."
-          rsync -az --delete -e "$ssh_cmd" \
-            .next public package*.json next.config.* \
-            $SERVER_USER@$SERVER_IP:$remote_dir
+          echo "📦 Syncing full project to server..."
+          rsync -az --delete \
+            --exclude ".git" \
+            --exclude "node_modules" \
+            --exclude ".next" \
+            -e "$ssh_cmd" \
+            ./ $SERVER_USER@$SERVER_IP:$remote_dir
 
-          echo "🚀 Restarting app remotely..."
+          echo "🚀 Installing and building on server..."
           $ssh_cmd $SERVER_USER@$SERVER_IP "
             cd $remote_dir && \
             pkill -f 'next start' || true && \
             npm install --omit=dev && \
+            npm run build && \
             nohup npm start > out.log 2>&1 &
           "
