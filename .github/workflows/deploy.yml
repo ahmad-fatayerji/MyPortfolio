@@ -24,7 +24,7 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy and restart (no systemd)
+      - name: Deploy and restart with screen
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
@@ -36,17 +36,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
-          echo "📦 Syncing build files..."
+          echo "📦 Syncing build files to server..."
 
           rsync -avz --delete \
             .next public package.json package-lock.json next.config.* \
             $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
 
-          echo "🚀 Restarting app..."
+          echo "🚀 Installing dependencies and restarting with screen..."
 
           ssh $SERVER_USER@$SERVER_IP "
             cd /var/www/mywebsite && \
-            pkill -f 'next start' || true && \
             npm install --omit=dev && \
-            nohup npm start > out.log 2>&1 &
+            screen -S mywebsite -X quit || true && \
+            screen -dmS mywebsite bash -c 'npm start'
           "
