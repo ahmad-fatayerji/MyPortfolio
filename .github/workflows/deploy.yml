@@ -46,6 +46,6 @@ jobs:
           rsync -avz --delete .next/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/.next/
           rsync -avz public/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/public/
           rsync -avz package.json $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
-          rsync -avz next.config.js $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
+          rsync -avz next.config.ts $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
           rsync -avz node_modules/ $SERVER_USER@$SERVER_IP:/var/www/mywebsite/node_modules/
 
