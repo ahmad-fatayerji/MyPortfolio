@@ -7,6 +7,10 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+// Shared hover underline styles
+const linkUnderlineClass =
+  "relative hover:text-primary transition after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left after:bg-black dark:after:bg-white";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -38,17 +42,13 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/" className="hover:text-primary transition">
+          <Link href="/" className={linkUnderlineClass}>
             Home
           </Link>
-          <Link href="/projects" className="hover:text-primary transition">
+          <Link href="/projects" className={linkUnderlineClass}>
             Projects
           </Link>
-          <a
-            href="#contact"
-            onClick={handleContactClick}
-            className="hover:text-primary transition"
-          >
+          <a href="#contact" onClick={handleContactClick} className={linkUnderlineClass}>
             Contact
           </a>
           <ThemeToggle />
@@ -96,7 +96,7 @@ export default function Navbar() {
             >
               <Link
                 href="/"
-                className="text-lg font-medium hover:text-primary transition"
+                className={`text-lg font-medium ${linkUnderlineClass}`}
                 onClick={() => setIsOpen(false)}
               >
                 Home
@@ -104,7 +104,7 @@ export default function Navbar() {
 
               <Link
                 href="/projects"
-                className="text-lg font-medium hover:text-primary transition"
+                className={`text-lg font-medium ${linkUnderlineClass}`}
                 onClick={() => setIsOpen(false)}
               >
                 Projects
@@ -112,7 +112,7 @@ export default function Navbar() {
 
               <a
                 href="#contact"
-                className="text-lg font-medium hover:text-primary transition"
+                className={`text-lg font-medium ${linkUnderlineClass}`}
                 onClick={handleContactClick}
               >
                 Contact
