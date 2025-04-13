@@ -1,17 +1,23 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
-  //output: 'export',
   trailingSlash: true,
+  webpack: (config) => {
+    // Explicitly set the alias for '@' to point to the 'src' folder
+    config.resolve.alias["@"] = path.resolve(__dirname, "src");
+    return config;
+  },
   async redirects() {
     return [
       {
-        source: '/projects/index.txt',
-        destination: '/projects',
+        source: "/projects/index.txt",
+        destination: "/projects",
         permanent: true,
       },
     ];
   },
+  trustProxy: 'loopback', // Add this line to trust the proxy
 };
 
 export default nextConfig;

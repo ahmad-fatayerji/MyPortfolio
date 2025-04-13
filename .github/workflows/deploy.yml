@@ -1,4 +1,4 @@
-name: Deploy website
+name: Deploy Website
 
 on:
   push:
@@ -6,47 +6,48 @@ on:
       - production
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
 
-      - name: Install dependencies and build
+      - name: Install & Build Locally
         run: |
           npm install
           npm run build
 
-      - name: Deploy and restart (no systemd)
+      - name: Upload Files to Server
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
-          # Setup SSH
-          mkdir -p ~/.ssh
-          echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
+          echo "$DEPLOY_SSH_KEY" > private_key.pem
+          chmod 600 private_key.pem
 
-          echo "📦 Syncing build files..."
+          rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" \
+            --exclude node_modules \
+            --exclude .git \
+            ./ $SERVER_USER@$SERVER_IP:/var/www/mywebsite
 
-          rsync -avz --delete \
-            .next public package.json package-lock.json next.config.* \
-            $SERVER_USER@$SERVER_IP:/var/www/mywebsite/
-
-          echo "🚀 Restarting app..."
-
-          ssh $SERVER_USER@$SERVER_IP "
-            cd /var/www/mywebsite && \
-            pkill -f 'next start' || true && \
-            npm install --omit=dev && \
-            nohup npm start > out.log 2>&1 &
+      - name: Install & Restart on Server
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "
+            cd /var/www/mywebsite &&
+            npm install &&
+            npm run build &&
+            pm2 restart my-nextjs-app || pm2 start npm --name 'my-nextjs-app' -- start &&
+            sudo systemctl restart apache2
           "

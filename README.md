@@ -1,8 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ahmad FATAYERJI | Portfolio Website
 
-## Getting Started
+Welcome to my personal portfolio! Built using modern web technologies, this site showcases my projects, skills, and experiences in software development.
 
-First, run the development server:
+## 🛠️ Technologies Used
+
+- **Framework:** [Next.js](https://nextjs.org)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com)
+- **Language:** TypeScript
+- **Animations:** Framer Motion
+- **Components:** Shadcn/ui
+- **Icons:** Lucide React
+- **Theming:** Next Themes
+
+## 🚀 Getting Started
+
+Follow these simple steps to run the project locally:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ahmad-fatayerji/MyPortfolio.git
+cd MyPortfolio
+```
+### 2. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+### 3. Run the development server
 
 ```bash
 npm run dev
@@ -10,27 +39,37 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📂 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- src/app: Contains page layouts and routes
+- src/components: UI components and reusable parts
+- src/data: JSON data for projects and career timeline
+- src/lib: Utility functions
+- src/styles: Global CSS with Tailwind configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Features
 
-## Learn More
+- Responsive Design: Optimized for desktop, tablet, and mobile devices
+- Dynamic Theming: Easily toggle between dark and light modes
+- Smooth Animations: Enhanced user experience using Framer Motion
+- SEO Friendly: Designed with best practices to improve search visibility
+- Easy Project Management: Projects dynamically loaded from JSON files for easy updates
 
-To learn more about Next.js, take a look at the following resources:
+## 🌐 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is deployed using GitHub Actions with automated build and deployment scripts for seamless updates:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Deployment workflow: deploy.yml
+- Hosting: Self-hosted VPS with Apache server
 
-## Deploy on Vercel
+## 📬 Get in Touch
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Email: ahmad.fatayerji2004@gmail.com
+- LinkedIn: ahmad-fatayerji
+- GitHub: ahmad-fatayerji
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to reach out to discuss potential collaborations or job opportunities!
+
+Happy coding! 🚀
