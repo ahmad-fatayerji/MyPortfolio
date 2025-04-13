@@ -48,3 +48,4 @@ jobs:
             npm run build
             PORT=3000 nohup npm start > out.log 2>&1 &
             sudo systemctl restart apache2
+EOF
