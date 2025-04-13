@@ -19,7 +19,12 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Deploy to Server
+      - name: Install & Build Locally
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload Files to Server
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
@@ -28,10 +33,21 @@ jobs:
           echo "$DEPLOY_SSH_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'EOF'
-            cd /var/www/mywebsite
-            npm install
-            npm run build
-            pm2 restart my-nextjs-app || pm2 start npm --name "my-nextjs-app" -- start
+          rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" \
+            --exclude node_modules \
+            --exclude .git \
+            ./ $SERVER_USER@$SERVER_IP:/var/www/mywebsite
+
+      - name: Install & Restart on Server
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "
+            cd /var/www/mywebsite &&
+            npm install &&
+            npm run build &&
+            pm2 restart my-nextjs-app || pm2 start npm --name 'my-nextjs-app' -- start &&
             sudo systemctl restart apache2
-          EOF
+          "
