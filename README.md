@@ -67,7 +67,7 @@ This project is deployed using GitHub Actions with automated build and deploymen
 ## 📬 Get in Touch
 
 - Email: ahmad.fatayerji2004@gmail.com
-- LinkedIn: Ahmad Fatayerji
+- LinkedIn: ahmad-fatayerji
 - GitHub: ahmad-fatayerji
 
 Feel free to reach out to discuss potential collaborations or job opportunities!
