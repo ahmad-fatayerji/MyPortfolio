@@ -4,8 +4,8 @@ import path from "path";
 const nextConfig: NextConfig = {
   trailingSlash: true,
   webpack: (config) => {
-    // Explicitly add the alias so that "@" maps to your "src" folder
-    config.resolve.alias["@"] = path.join(__dirname, "src");
+    // Explicitly set the alias for '@' to point to the 'src' folder
+    config.resolve.alias["@"] = path.resolve(__dirname, "src");
     return config;
   },
   async redirects() {
