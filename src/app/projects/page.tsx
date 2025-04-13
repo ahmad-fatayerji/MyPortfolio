@@ -35,7 +35,7 @@ export default function ProjectsPage() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="text-4xl font-bold text-center mb-10"
       >
-        My Projects (More to be added very soon!)
+        My Projects : More to be added very soon!
       </motion.h2>
 
       <motion.div
