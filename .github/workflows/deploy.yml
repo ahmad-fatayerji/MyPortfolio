@@ -1,4 +1,4 @@
-name: Deploy website
+name: Deploy Website
 
 on:
   push:
@@ -6,25 +6,20 @@ on:
       - production
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "npm"
+          cache: 'npm'
 
-      - name: Install dependencies and build
-        run: |
-          npm ci
-          npm run build
-
-      - name: Deploy to server
+      - name: Deploy and build on server
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
@@ -44,11 +39,12 @@ jobs:
             -e "$ssh_cmd" \
             ./ $SERVER_USER@$SERVER_IP:$remote_dir
 
-          echo "🚀 Restarting app on server..."
-          $ssh_cmd $SERVER_USER@$SERVER_IP "
-            cd $remote_dir && \
-            pkill -f 'next start' || true && \
-            npm install --omit=dev && \
-            npm run build && \
+          echo "🚀 Installing, building, and restarting services..."
+          $ssh_cmd $SERVER_USER@$SERVER_IP <<EOF
+            cd $remote_dir
+            pkill -f 'next start' || true
+            rm -rf .next
+            npm install --omit=dev
+            npm run build
             PORT=3000 nohup npm start > out.log 2>&1 &
-          "
+            sudo systemctl restart apache2
