@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  trustProxy: 'loopback', // Add this line to trust the proxy
 };
 
 export default nextConfig;
