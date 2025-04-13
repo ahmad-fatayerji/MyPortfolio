@@ -11,5 +11,11 @@
     "description": "A Java application that processes coordinates to generate tablos using quadtree structures. It also includes a ternary tree variant, offering an alternative way to divide space. The app creates structured visual representations, making it useful for generating tablos and even artistic designs.",
     "tags": ["Java"],
     "code": "https://github.com/ahmad-fatayerji/L3-ASD3"
+  },
+  {
+    "title": "SimpleML Type Checker and Interpreter",
+    "description": "An OCaml project that implements a type checker and evaluator for a custom language called SimpleML. It supports integer and boolean operations, function calls, let bindings, conditionals, and includes extended features like floats, print statements, sequencing, and unit type. Built using Menhir, ocamllex, and dune.",
+    "tags": ["OCaml", "Menhir", "Compiler", "Parser", "Functional Programming"],
+    "code": "https://github.com/ahmad-fatayerji/L3-Ocaml"
   }
 ]
