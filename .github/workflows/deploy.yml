@@ -28,4 +28,4 @@ jobs:
           echo "$DEPLOY_SSH_KEY" > private_key.pem
           chmod 600 private_key.pem
 
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /var/www/mywebsite && npm install --omit=dev && npm run build && pm2 restart my-nextjs-app && sudo systemctl restart apache2"
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /var/www/mywebsite && npm install && npm run build && pm2 restart my-nextjs-app && sudo systemctl restart apache2"
