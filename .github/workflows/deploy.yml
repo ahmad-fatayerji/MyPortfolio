@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install & Build Locally
         run: |
@@ -48,6 +48,8 @@ jobs:
             cd /var/www/mywebsite &&
             npm install &&
             npm run build &&
-            pm2 restart my-nextjs-app || pm2 start npm --name 'my-nextjs-app' -- start &&
+            pm2 delete my-nextjs-app || true
+            pm2 start npm --name 'my-nextjs-app' -- start
+            pm2 save
             sudo systemctl restart apache2
           "
