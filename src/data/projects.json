@@ -1,5 +1,11 @@
 [
   {
+    "title": "AlChaar-Kiosk",
+    "description": "Pharmacy Front Facing Kiosk",
+    "tags": ["Next.js", "TailwindCSS", "TypeScript", "Prisma ORM", "PostgreSQL", "Docker"],
+    "code": "https://github.com/ahmad-fatayerji/alchaar-kiosk"
+  },
+  {
     "title": "Next.js Website",
     "description": "A portfolio website built using Next.js, TailwindCSS, and TypeScript.",
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "Framer Motion"],
