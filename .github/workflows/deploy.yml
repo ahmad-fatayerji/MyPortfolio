@@ -1,53 +1,121 @@
-name: Deploy Website
+name: Deploy ahmadfatayerji.com (PM2 + rsync)
 
 on:
   push:
-    branches:
-      - production
+    branches: [production]
+
+concurrency: ahmadfatayerji-deploy
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
-      - name: Install & Build Locally
+      - name: Install & build (standalone)
         run: |
-          npm install
+          set -e
+          npm ci
           npm run build
+          echo "${GITHUB_SHA} $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > version.txt
 
-      - name: Upload Files to Server
-        env:
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+      - name: Prepare standalone bundle  ✅ full .next + public
         run: |
-          echo "$DEPLOY_SSH_KEY" > private_key.pem
-          chmod 600 private_key.pem
+          set -e
+          rm -rf out_standalone
+          mkdir -p out_standalone/.next
 
-          rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" \
-            --exclude node_modules \
-            --exclude .git \
-            ./ $SERVER_USER@$SERVER_IP:/var/www/mywebsite
+          # 1) Standalone runtime (server.js + minimal node_modules)
+          cp -r .next/standalone/* out_standalone/
 
-      - name: Install & Restart on Server
+          # 2) FULL Next build (metadata + static) but skip cache
+          rsync -a --delete --exclude 'cache/' .next/ out_standalone/.next/
+
+          # 3) Public assets
+          [ -d public ] && rsync -a public/ out_standalone/public/
+
+          # Version marker (optional)
+          cp version.txt out_standalone/
+
+      - name: Start ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Upload release via rsync
         env:
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "
-            cd /var/www/mywebsite &&
-            npm install &&
-            npm run build &&
-            pm2 restart my-nextjs-app || pm2 start npm --name 'my-nextjs-app' -- start &&
-            sudo systemctl restart apache2
-          "
+          set -e
+          RSYNC_DEST="/var/www/ahmadfatayerji.com/releases/${{ github.sha }}/"
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=accept-new" \
+            out_standalone/ "${SSH_USER}@${SSH_HOST}:${RSYNC_DEST}"
+
+      - name: Activate release + PM2 restart (node server.js) + wait + prune
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            set -x
+
+            # ---- Settings ----
+            SITE=/var/www/ahmadfatayerji.com
+            APP=ahmadfatayerji
+            PORT=3000
+            REL="$SITE/releases/${{ github.sha }}"
+            CUR="$SITE/current"
+
+            on_err() {
+              echo "❌ Deployment step failed. Dumping PM2 and last logs..."
+              pm2 status || true
+              pm2 logs "$APP" --lines 200 || true
+            }
+            trap on_err ERR
+
+            echo "🔗 Switching current -> $REL"
+            ln -sfn "$REL" "$CUR"
+            echo "current -> $(readlink -f "$CUR")"
+
+            echo "🔎 Verifying Next build metadata"
+            [ -f "$CUR/.next/BUILD_ID" ] || { echo "❌ .next/BUILD_ID missing"; ls -la "$CUR/.next"; exit 1; }
+
+            echo "🎯 Resolving entry (server.js)"
+            if [ -f "$CUR/server.js" ]; then
+              ENTRY="$CUR/server.js"
+            elif [ -f "$CUR/.next/standalone/server.js" ]; then
+              ENTRY="$CUR/.next/standalone/server.js"
+            else
+              echo "❌ No server.js found in $CUR or .next/standalone"
+              ls -la "$CUR"
+              exit 1
+            fi
+            echo "ENTRY=$ENTRY"
+
+            echo "♻️  Restarting PM2 app $APP"
+            pm2 delete "$APP" || true
+            HOST=127.0.0.1 PORT="$PORT" NODE_ENV=production \
+              pm2 start /usr/bin/node --name "$APP" -- "$ENTRY"
+            pm2 save
+
+            echo "⏳ Waiting for port :$PORT to open..."
+            for i in $(seq 1 90); do
+              if ss -ltn 2>/dev/null | grep -q ":$PORT"; then
+                echo "✅ Port :$PORT is listening"
+                break
+              fi
+              sleep 1
+            done
+            ss -ltn | grep -q ":$PORT" || { echo "❌ Port :$PORT did not open in time"; exit 1; }
+
+            echo "🌐 HTTP probe on http://127.0.0.1:$PORT"

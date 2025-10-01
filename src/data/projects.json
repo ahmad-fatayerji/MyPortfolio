@@ -1,8 +1,21 @@
 [
   {
+    "title": "AD HOC International",
+    "description": "A corporate website for AD HOC International, a Beirut-based multidisciplinary architectural and engineering consultancy and construction firm. It showcases their services and a portfolio of their general contracting projects.",
+    "tags": ["Next.js", "TailwindCSS", "TypeScript", "CI/CD"],
+    "link": "https://adhocint.com/",
+    "code": "https://github.com/ahmad-fatayerji/adhocint"
+  },
+  {
+    "title": "AlChaar-Kiosk",
+    "description": "Pharmacy Front Facing Kiosk",
+    "tags": ["Next.js", "TailwindCSS", "TypeScript", "Prisma ORM", "PostgreSQL", "Docker", "CI/CD"],
+    "code": "https://github.com/ahmad-fatayerji/alchaar-kiosk"
+  },
+  {
     "title": "Next.js Website",
     "description": "A portfolio website built using Next.js, TailwindCSS, and TypeScript.",
-    "tags": ["Next.js", "TailwindCSS", "TypeScript", "Framer Motion"],
+    "tags": ["Next.js", "TailwindCSS", "TypeScript", "Framer Motion", "CI/CD"],
     "link": "/",
     "code": "https://github.com/ahmad-fatayerji/MyPortfolio"
   },
