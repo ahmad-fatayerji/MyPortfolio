@@ -1,5 +1,12 @@
 [
   {
+    "title": "AD HOC International",
+    "description": "WIP",
+    "tags": ["Next.js", "TailwindCSS", "TypeScript", "Docker"],
+    "link": "https://adhocint.com/",
+    "code": "https://github.com/ahmad-fatayerji/adhocint"
+  },
+  {
     "title": "AlChaar-Kiosk",
     "description": "Pharmacy Front Facing Kiosk",
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "Prisma ORM", "PostgreSQL", "Docker"],
