@@ -7,6 +7,7 @@
     "code": "https://github.com/ahmad-fatayerji/adhocint"
   },
   {
+    "title": "AlChaar-Kiosk",
     "description": "Pharmacy Front Facing Kiosk",
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "Prisma ORM", "PostgreSQL", "Docker", "CI/CD"],
     "code": "https://github.com/ahmad-fatayerji/alchaar-kiosk"
