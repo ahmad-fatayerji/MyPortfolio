@@ -4,7 +4,7 @@ on:
   push:
     branches: [production]
 
-concurrency: afj-deploy
+concurrency: ahmadfatayerji-deploy
 
 jobs:
   deploy:
@@ -31,16 +31,16 @@ jobs:
           rm -rf out_standalone
           mkdir -p out_standalone/.next
 
-          # 1) Standalone runtime (server.js + minimal node_modules)
+          # 1) Standalone runtime
           cp -r .next/standalone/* out_standalone/
 
-          # 2) FULL Next build (metadata + static) but skip heavy cache
+          # 2) FULL Next build (without cache)
           rsync -a --delete --exclude 'cache/' .next/ out_standalone/.next/
 
           # 3) Public assets
           [ -d public ] && rsync -a public/ out_standalone/public/
 
-          # Optional: version marker
+          # Version marker
           cp version.txt out_standalone/
 
       - name: Start ssh-agent
@@ -58,7 +58,7 @@ jobs:
           rsync -az --delete -e "ssh -o StrictHostKeyChecking=accept-new" \
             out_standalone/ "${SSH_USER}@${SSH_HOST}:${RSYNC_DEST}"
 
-      - name: Activate release + PM2 restart + wait + prune
+      - name: Activate release + PM2 restart (node server.js) + wait + prune
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -70,31 +70,39 @@ jobs:
             SITE=/var/www/ahmadfatayerji.com
             REL="$SITE/releases/${{ github.sha }}"
             CUR="$SITE/current"
-            PORT=3000
             APP=ahmadfatayerji
+            PORT=3000
 
-            # Link current
+            # Point current to new release
             ln -sfn "$REL" "$CUR"
             echo "current -> $(readlink -f "$CUR")"
 
-            # Sanity: Next build present
-            [ -f "$CUR/.next/BUILD_ID" ] || { echo "❌ .next/BUILD_ID missing"; ls -la "$CUR/.next"; exit 1; }
+            # Ensure production build metadata exists
+            [ -f "$CUR/.next/BUILD_ID" ] || { echo "❌ .next/BUILD_ID missing in release"; ls -la "$CUR/.next"; exit 1; }
 
-            # Entry file for standalone
+            # Pick standalone entry
             if [ -f "$CUR/server.js" ]; then ENTRY="$CUR/server.js";
             elif [ -f "$CUR/.next/standalone/server.js" ]; then ENTRY="$CUR/.next/standalone/server.js";
             else echo "❌ no server.js found"; ls -la "$CUR"; exit 1; fi
 
-            # Start/reload PM2 (no .env used)
+            # Restart app with PM2
             pm2 delete "$APP" || true
             PORT="$PORT" HOST="127.0.0.1" NODE_ENV=production \
-              pm2 start /usr/bin/node --name "$APP" -- "$ENTRY"
+            pm2 start /usr/bin/node --name "$APP" -- "$ENTRY"
             pm2 save
 
-            # Wait for port then HTTP probe
+            # Wait for port to open + HTTP probe
             for i in $(seq 1 60); do ss -ltn | grep -q ":$PORT" && break; sleep 1; done
             ss -ltn | grep -q ":$PORT" || { echo "❌ Port :$PORT not open"; pm2 logs "$APP" --lines 120; exit 1; }
             curl -sfI "http://127.0.0.1:${PORT}" >/dev/null || { echo "❌ HTTP probe failed"; pm2 logs "$APP" --lines 120; exit 1; }
 
-            # Keep last 5 releases
-            cd "$SITE/releases" && ls -1t | tail -n
+            # Keep only last 5 releases (portable prune)
+            KEEP=5
+            cd "$SITE/releases" || exit 0
+            OLD=$(ls -1t | awk "NR>$KEEP")
+            if [ -n "$OLD" ]; then
+              echo "Pruning old releases:"
+              echo "$OLD" | xargs -r rm -rf
+            else
+              echo "No old releases to prune."
+            fi
