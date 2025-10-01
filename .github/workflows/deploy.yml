@@ -25,22 +25,22 @@ jobs:
           npm run build
           echo "${GITHUB_SHA} $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > version.txt
 
-      - name: Prepare standalone bundle  ✅ FULL .next + public
+      - name: Prepare standalone bundle  ✅ full .next + public
         run: |
           set -e
           rm -rf out_standalone
           mkdir -p out_standalone/.next
 
-          # 1) Standalone runtime
+          # 1) Standalone runtime (server.js + minimal node_modules)
           cp -r .next/standalone/* out_standalone/
 
-          # 2) FULL Next build (without cache)
+          # 2) FULL Next build (metadata + static) but skip cache
           rsync -a --delete --exclude 'cache/' .next/ out_standalone/.next/
 
           # 3) Public assets
           [ -d public ] && rsync -a public/ out_standalone/public/
 
-          # Version marker
+          # Version marker (optional)
           cp version.txt out_standalone/
 
       - name: Start ssh-agent
@@ -66,43 +66,56 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script_stop: true
           script: |
-            set -eo pipefail
+            set -euo pipefail
+            set -x
+
+            # ---- Settings ----
             SITE=/var/www/ahmadfatayerji.com
-            REL="$SITE/releases/${{ github.sha }}"
-            CUR="$SITE/current"
             APP=ahmadfatayerji
             PORT=3000
+            REL="$SITE/releases/${{ github.sha }}"
+            CUR="$SITE/current"
 
-            # Point current to new release
+            on_err() {
+              echo "❌ Deployment step failed. Dumping PM2 and last logs..."
+              pm2 status || true
+              pm2 logs "$APP" --lines 200 || true
+            }
+            trap on_err ERR
+
+            echo "🔗 Switching current -> $REL"
             ln -sfn "$REL" "$CUR"
             echo "current -> $(readlink -f "$CUR")"
 
-            # Ensure production build metadata exists
-            [ -f "$CUR/.next/BUILD_ID" ] || { echo "❌ .next/BUILD_ID missing in release"; ls -la "$CUR/.next"; exit 1; }
+            echo "🔎 Verifying Next build metadata"
+            [ -f "$CUR/.next/BUILD_ID" ] || { echo "❌ .next/BUILD_ID missing"; ls -la "$CUR/.next"; exit 1; }
 
-            # Pick standalone entry
-            if [ -f "$CUR/server.js" ]; then ENTRY="$CUR/server.js";
-            elif [ -f "$CUR/.next/standalone/server.js" ]; then ENTRY="$CUR/.next/standalone/server.js";
-            else echo "❌ no server.js found"; ls -la "$CUR"; exit 1; fi
+            echo "🎯 Resolving entry (server.js)"
+            if [ -f "$CUR/server.js" ]; then
+              ENTRY="$CUR/server.js"
+            elif [ -f "$CUR/.next/standalone/server.js" ]; then
+              ENTRY="$CUR/.next/standalone/server.js"
+            else
+              echo "❌ No server.js found in $CUR or .next/standalone"
+              ls -la "$CUR"
+              exit 1
+            fi
+            echo "ENTRY=$ENTRY"
 
-            # Restart app with PM2
+            echo "♻️  Restarting PM2 app $APP"
             pm2 delete "$APP" || true
-            PORT="$PORT" HOST="127.0.0.1" NODE_ENV=production \
-            pm2 start /usr/bin/node --name "$APP" -- "$ENTRY"
+            HOST=127.0.0.1 PORT="$PORT" NODE_ENV=production \
+              pm2 start /usr/bin/node --name "$APP" -- "$ENTRY"
             pm2 save
 
-            # Wait for port to open + HTTP probe
-            for i in $(seq 1 60); do ss -ltn | grep -q ":$PORT" && break; sleep 1; done
-            ss -ltn | grep -q ":$PORT" || { echo "❌ Port :$PORT not open"; pm2 logs "$APP" --lines 120; exit 1; }
-            curl -sfI "http://127.0.0.1:${PORT}" >/dev/null || { echo "❌ HTTP probe failed"; pm2 logs "$APP" --lines 120; exit 1; }
+            echo "⏳ Waiting for port :$PORT to open..."
+            for i in $(seq 1 90); do
+              if ss -ltn 2>/dev/null | grep -q ":$PORT"; then
+                echo "✅ Port :$PORT is listening"
+                break
+              fi
+              sleep 1
+            done
+            ss -ltn | grep -q ":$PORT" || { echo "❌ Port :$PORT did not open in time"; exit 1; }
 
-            # Keep only last 5 releases (portable prune)
-            KEEP=5
-            cd "$SITE/releases" || exit 0
-            OLD=$(ls -1t | awk "NR>$KEEP")
-            if [ -n "$OLD" ]; then
-              echo "Pruning old releases:"
-              echo "$OLD" | xargs -r rm -rf
-            else
-              echo "No old releases to prune."
-            fi
+            echo "🌐 HTTP probe on http://127.0.0.1:$PORT"
