@@ -2,7 +2,7 @@ name: Deploy ahmadfatayerji.com (PM2 + rsync)
 
 on:
   push:
-    branches: [master]
+    branches: [production]
 
 concurrency: afj-deploy
 
