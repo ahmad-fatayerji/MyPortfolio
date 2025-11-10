@@ -4,9 +4,8 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import Navbar from "@/components/ui/Navbar";
-// import ContactSection from "@/components/ContactSection"; legacy contact section
 
-import "@/styles/global.css";
+import "../styles/global.css";
 
 const inter = Inter({
   subsets: ["latin"],
