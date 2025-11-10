@@ -1,26 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ProjectCard from "@/app/projects/ProjectCard";
 import { Project } from "@/types/project";
+import projectsData from "@/data/projects.json";
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const projectsModule = await import("@/data/projects.json"); // ✅ Corrected import
-        const data: Project[] = projectsModule.default;
-        setProjects(data);
-      } catch (error) {
-        console.error("Error loading projects:", error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
+  // Prefer static import for JSON with Turbopack; avoids CSR-only fetch and timing issues
+  const projects = (projectsData as unknown as Project[]) ?? [];
 
   return (
     <motion.div

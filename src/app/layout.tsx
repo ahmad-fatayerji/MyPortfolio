@@ -23,7 +23,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // Suppress hydration warning because next-themes mutates <html> class/style on client
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`min-h-screen bg-background text-foreground transition-colors duration-300 ${inter.variable}`}
       >
