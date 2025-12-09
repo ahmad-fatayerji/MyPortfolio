@@ -4,9 +4,8 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import Navbar from "@/components/ui/Navbar";
-// import ContactSection from "@/components/ContactSection"; legacy contact section
 
-import "@/styles/global.css";
+import "../styles/global.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +22,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // Suppress hydration warning because next-themes mutates <html> class/style on client
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`min-h-screen bg-background text-foreground transition-colors duration-300 ${inter.variable}`}
       >
