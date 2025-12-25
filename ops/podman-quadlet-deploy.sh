@@ -34,12 +34,14 @@ echo "==> Reloading systemd user units"
 systemctl --user daemon-reload
 sleep 2
 
-UNIT_CONTAINER="ahmadfatayerji-web.container"
+UNIT_CONTAINER_PATH="$QUADLET_DIR/ahmadfatayerji-web.container"
 UNIT_SERVICE="ahmadfatayerji-web.service"
-if systemctl --user is-enabled --quiet "$UNIT_CONTAINER"; then
+
+# Enable via absolute path to avoid .container -> .service suffix confusion.
+if systemctl --user enable --now "$UNIT_CONTAINER_PATH" 2>/dev/null; then
   systemctl --user restart "$UNIT_SERVICE"
 else
-  systemctl --user enable --now "$UNIT_CONTAINER"
+  systemctl --user restart "$UNIT_SERVICE"
 fi
 
 echo "==> Health check"
