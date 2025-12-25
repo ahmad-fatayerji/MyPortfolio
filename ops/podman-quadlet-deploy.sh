@@ -3,14 +3,9 @@ set -euo pipefail
 
 APP_DIR="${APP_DIR:-/opt/ahmadfatayerji}"
 QUADLET_DIR="${QUADLET_DIR:-$HOME/.config/containers/systemd}"
-ENV_FILE="${ENV_FILE:-$APP_DIR/.env.production}"
 TEMPLATE_FILE="$APP_DIR/ops/quadlet/ahmadfatayerji-web.container"
 GIT_REF="${GIT_REF:-production}"
-
-if [[ -z "${APP_PORT:-}" && -f "$ENV_FILE" ]]; then
-  APP_PORT="$(grep -E '^APP_PORT=' "$ENV_FILE" | tail -n1 | cut -d= -f2-)"
-fi
-APP_PORT="${APP_PORT:-3002}"
+APP_PORT=3000
 
 if [[ -z "${XDG_RUNTIME_DIR:-}" ]]; then
   export XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -29,7 +24,7 @@ if [[ "${GIT_PULL:-0}" == "1" ]]; then
 fi
 
 mkdir -p "$QUADLET_DIR"
-sed "s/{{APP_PORT}}/${APP_PORT}/g" "$TEMPLATE_FILE" > "$QUADLET_DIR/ahmadfatayerji-web.container"
+cp -f "$TEMPLATE_FILE" "$QUADLET_DIR/ahmadfatayerji-web.container"
 
 echo "==> Building image"
 podman build -t localhost/ahmadfatayerji-web:latest .

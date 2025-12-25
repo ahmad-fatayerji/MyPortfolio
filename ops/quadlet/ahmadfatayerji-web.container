@@ -4,7 +4,7 @@ Description=ahmadfatayerji.com web
 [Container]
 Image=localhost/ahmadfatayerji-web:latest
 ContainerName=ahmadfatayerji-web
-PublishPort=127.0.0.1:{{APP_PORT}}:3000
+PublishPort=127.0.0.1:3000:3000
 Environment=NODE_ENV=production
 Environment=NEXT_TELEMETRY_DISABLED=1
 Environment=PORT=3000
