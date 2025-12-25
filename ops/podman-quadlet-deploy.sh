@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/opt/MyPortfolio}"
+SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+APP_DIR="${APP_DIR:-$SCRIPT_ROOT}"
 QUADLET_DIR="${QUADLET_DIR:-$HOME/.config/containers/systemd}"
 TEMPLATE_FILE="$APP_DIR/ops/quadlet/ahmadfatayerji-web.container"
 GIT_REF="${GIT_REF:-production}"
