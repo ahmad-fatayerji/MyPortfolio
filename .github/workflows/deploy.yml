@@ -21,7 +21,7 @@ jobs:
           script: |
             set -euo pipefail
 
-            APP_DIR=/opt/ahmadfatayerji
+            APP_DIR=/opt/MyPortfolio
  
             if [ ! -d "$APP_DIR/.git" ]; then
               echo "ERROR: $APP_DIR is missing a git repo. Clone it once on the server."

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/opt/ahmadfatayerji}"
+APP_DIR="${APP_DIR:-/opt/MyPortfolio}"
 QUADLET_DIR="${QUADLET_DIR:-$HOME/.config/containers/systemd}"
 TEMPLATE_FILE="$APP_DIR/ops/quadlet/ahmadfatayerji-web.container"
 GIT_REF="${GIT_REF:-production}"
