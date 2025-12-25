@@ -34,11 +34,12 @@ echo "==> Reloading systemd user units"
 systemctl --user daemon-reload
 sleep 2
 
-UNIT="ahmadfatayerji-web.service"
-if systemctl --user is-active --quiet "$UNIT"; then
-  systemctl --user restart "$UNIT"
+UNIT_CONTAINER="ahmadfatayerji-web.container"
+UNIT_SERVICE="ahmadfatayerji-web.service"
+if systemctl --user is-enabled --quiet "$UNIT_CONTAINER"; then
+  systemctl --user restart "$UNIT_SERVICE"
 else
-  systemctl --user enable --now "$UNIT"
+  systemctl --user enable --now "$UNIT_CONTAINER"
 fi
 
 echo "==> Health check"
