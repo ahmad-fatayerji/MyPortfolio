@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: localhost/ahmadfatayerji-web:latest
+    container_name: ahmadfatayerji-web
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped

@@ -1,64 +1,17 @@
-name: Deploy ahmadfatayerji.com (PM2 + rsync)
+name: Deploy ahmadfatayerji.com (Podman Quadlet)
 
 on:
   push:
     branches: [production]
+  workflow_dispatch:
 
 concurrency: ahmadfatayerji-deploy
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install & build (standalone)
-        run: |
-          set -e
-          npm ci
-          npm run build
-          echo "${GITHUB_SHA} $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > version.txt
-
-      - name: Prepare standalone bundle  ✅ full .next + public
-        run: |
-          set -e
-          rm -rf out_standalone
-          mkdir -p out_standalone/.next
-
-          # 1) Standalone runtime (server.js + minimal node_modules)
-          cp -r .next/standalone/* out_standalone/
-
-          # 2) FULL Next build (metadata + static) but skip cache
-          rsync -a --delete --exclude 'cache/' .next/ out_standalone/.next/
-
-          # 3) Public assets
-          [ -d public ] && rsync -a public/ out_standalone/public/
-
-          # Version marker (optional)
-          cp version.txt out_standalone/
-
-      - name: Start ssh-agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
-
-      - name: Upload release via rsync
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-        run: |
-          set -e
-          RSYNC_DEST="/var/www/ahmadfatayerji.com/releases/${{ github.sha }}/"
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=accept-new" \
-            out_standalone/ "${SSH_USER}@${SSH_HOST}:${RSYNC_DEST}"
-
-      - name: Activate release + PM2 restart (node server.js) + wait + prune
+      - name: Deploy via SSH (Podman Quadlet)
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -67,55 +20,29 @@ jobs:
           script_stop: true
           script: |
             set -euo pipefail
-            set -x
 
-            # ---- Settings ----
-            SITE=/var/www/ahmadfatayerji.com
-            APP=ahmadfatayerji
-            PORT=3000
-            REL="$SITE/releases/${{ github.sha }}"
-            CUR="$SITE/current"
-
-            on_err() {
-              echo "❌ Deployment step failed. Dumping PM2 and last logs..."
-              pm2 status || true
-              pm2 logs "$APP" --lines 200 || true
-            }
-            trap on_err ERR
-
-            echo "🔗 Switching current -> $REL"
-            ln -sfn "$REL" "$CUR"
-            echo "current -> $(readlink -f "$CUR")"
-
-            echo "🔎 Verifying Next build metadata"
-            [ -f "$CUR/.next/BUILD_ID" ] || { echo "❌ .next/BUILD_ID missing"; ls -la "$CUR/.next"; exit 1; }
-
-            echo "🎯 Resolving entry (server.js)"
-            if [ -f "$CUR/server.js" ]; then
-              ENTRY="$CUR/server.js"
-            elif [ -f "$CUR/.next/standalone/server.js" ]; then
-              ENTRY="$CUR/.next/standalone/server.js"
-            else
-              echo "❌ No server.js found in $CUR or .next/standalone"
-              ls -la "$CUR"
+            APP_DIR=/opt/ahmadfatayerji
+ 
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "ERROR: $APP_DIR is missing a git repo. Clone it once on the server."
               exit 1
             fi
-            echo "ENTRY=$ENTRY"
 
-            echo "♻️  Restarting PM2 app $APP"
-            pm2 delete "$APP" || true
-            HOST=127.0.0.1 PORT="$PORT" NODE_ENV=production \
-              pm2 start /usr/bin/node --name "$APP" -- "$ENTRY"
-            pm2 save
+            cd "$APP_DIR"
 
-            echo "⏳ Waiting for port :$PORT to open..."
-            for i in $(seq 1 90); do
-              if ss -ltn 2>/dev/null | grep -q ":$PORT"; then
-                echo "✅ Port :$PORT is listening"
-                break
-              fi
-              sleep 1
-            done
-            ss -ltn | grep -q ":$PORT" || { echo "❌ Port :$PORT did not open in time"; exit 1; }
+            # Make ops scripts executable (Windows/Git perms safety)
+            chmod +x ops/*.sh || true
 
-            echo "🌐 HTTP probe on http://127.0.0.1:$PORT"
+            # Ensure git can operate even if ownership changed at some point
+            git config --global --add safe.directory "$APP_DIR" || true
+
+            # Ensure user systemd bus is reachable in non-interactive SSH
+            export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+            export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+
+            # Run deployment (pull, build, restart)
+            GIT_PULL=1 ops/podman-quadlet-deploy.sh
+
+            # Optional: show status at end (helps Actions logs)
+            systemctl --user daemon-reload || true
+            systemctl --user status ahmadfatayerji-web --no-pager || true
