@@ -2,7 +2,7 @@
   {
     "title": "AD HOC International",
     "description": "A corporate website for AD HOC International, a Beirut-based multidisciplinary architectural and engineering consultancy and construction firm. It showcases their services and a portfolio of their general contracting projects.",
-    "tags": ["Next.js", "TailwindCSS", "TypeScript", "CI/CD", "Podman/Docker"],
+    "tags": ["Next.js", "TailwindCSS", "TypeScript", "CI/CD", "Podman/Docker", "MinIO", "PostgreSQL"],
     "link": "https://adhocint.com/",
     "code": "https://github.com/ahmad-fatayerji/adhocint"
   },
