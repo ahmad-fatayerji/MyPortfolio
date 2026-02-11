@@ -82,8 +82,9 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
 }
 
 .gradient-mesh::before,
@@ -114,27 +115,27 @@
   animation-delay: -10s;
 }
 
-/* Mobile: smaller blobs kept fully inside viewport */
+/* Mobile: blobs positioned to fill viewport edges naturally */
 @media (max-width: 640px) {
   .gradient-mesh::before,
   .gradient-mesh::after {
     filter: blur(100px);
-    opacity: 0.12;
+    opacity: 0.14;
     animation: floatMobile 25s ease-in-out infinite;
   }
 
   .gradient-mesh::before {
-    width: 300px;
-    height: 300px;
-    top: 0;
-    left: -40px;
+    width: 350px;
+    height: 350px;
+    top: -30px;
+    left: -20px;
   }
 
   .gradient-mesh::after {
-    width: 260px;
-    height: 260px;
-    bottom: 5%;
-    right: -40px;
+    width: 300px;
+    height: 300px;
+    bottom: 10%;
+    right: -20px;
   }
 }
 
@@ -282,8 +283,9 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
   opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
