@@ -1,30 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Server, Database, Globe } from "lucide-react";
+import { Code2, Layers, Wrench, Languages } from "lucide-react";
+import skillsData from "@/data/skills.json";
 
-const skills = [
+interface Skill {
+  icon: string;
+  title: string;
+  items: string[];
+}
+
+const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } =
   {
-    icon: Code2,
-    title: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "TailwindCSS"],
-  },
-  {
-    icon: Server,
-    title: "Backend",
-    items: ["Java", "OCaml", "Node.js", "REST APIs"],
-  },
-  {
-    icon: Database,
-    title: "Data & Infra",
-    items: ["PostgreSQL", "Prisma", "Docker", "CI/CD"],
-  },
-  {
-    icon: Globe,
-    title: "Other",
-    items: ["Git", "Linux", "Podman", "Agile"],
-  },
-];
+    Code2,
+    Layers,
+    Wrench,
+    Languages,
+  };
 
 export default function AboutPage() {
   return (
@@ -56,29 +48,32 @@ export default function AboutPage() {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="grid grid-cols-1 sm:grid-cols-2 gap-5"
       >
-        {skills.map((skill, i) => (
-          <motion.div
-            key={skill.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-            className="glass-card gradient-border p-6 group"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                <skill.icon className="w-5 h-5 text-primary" />
+        {skillsData.map((skill: Skill, i) => {
+          const IconComponent = iconMap[skill.icon];
+          return (
+            <motion.div
+              key={skill.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+              className="glass-card gradient-border p-6 group"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                  <IconComponent className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-semibold">{skill.title}</h3>
               </div>
-              <h3 className="font-semibold">{skill.title}</h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {skill.items.map((item) => (
-                <span key={item} className="tag-pill">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+              <div className="flex flex-wrap gap-2">
+                {skill.items.map((item) => (
+                  <span key={item} className="tag-pill">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          );
+        })}
       </motion.div>
     </motion.div>
   );
