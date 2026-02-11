@@ -14,7 +14,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Ahmad FATAYERJI",
-  description: "Ahmad FATAYERJI - Developer in France",
+  description: "Ahmad FATAYERJI - Software Engineer based in France",
   icons: {
     icon: "/af_logo.svg",
   },
@@ -22,22 +22,33 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    // Suppress hydration warning because next-themes mutates <html> class/style on client
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`min-h-screen bg-background text-foreground transition-colors duration-300 ${inter.variable}`}
+        className={`min-h-screen bg-background text-foreground antialiased ${inter.variable} font-sans`}
       >
         <ThemeProvider>
-          <div className="flex flex-col min-h-screen">
-            {/* Global Navbar */}
+          {/* Animated gradient background */}
+          <div className="gradient-mesh" />
+          <div className="noise-overlay" />
+
+          <div className="relative flex flex-col min-h-screen">
             <Navbar />
 
-            {/* Main Content */}
-            <main className="flex-1 container mx-auto p-6 mt-20">
+            <main className="flex-1 container mx-auto px-6 pt-24 pb-12 max-w-6xl">
               {children}
             </main>
 
-            {/* <ContactSection /> */}
+            {/* Footer */}
+            <footer className="border-t border-border/40 py-8">
+              <div className="container mx-auto px-6 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-sm text-muted-foreground">
+                  &copy; {new Date().getFullYear()}{" "}
+                  <span className="font-medium text-foreground">
+                    Ahmad FATAYERJI
+                  </span>
+                </p>
+              </div>
+            </footer>
           </div>
         </ThemeProvider>
       </body>

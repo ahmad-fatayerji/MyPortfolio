@@ -1,24 +1,33 @@
 [
   {
-      "id": 1,
-      "date": "September 2025 - Present",
-      "title": "Master's degree in Software Engineering",
-      "company": "Nantes Université",
-      "description": "Pursuing a Master's degree in Software Engineering with a focus on software architecture, software testing, formal verification, concurrent and distributed systems, and large-scale web and cloud technologies. Engaging in practical and research projects to deepen expertise in designing, analyzing, and developing robust and scalable software systems."
-    },
-    {
-      "id": 2,
-      "date": "September 2022 - June 2025",
-      "title": "Bachelor's degree in Computer Science",
-      "company": "Nantes Université",
-      "description": "Pursuing a Bachelor's degree in Computer Science, focusing on software development, algorithms, data structures, and modern technologies. Engaging in hands-on projects and research to enhance problem-solving and programming skills"
-    },
-    {
-      "id": 3,
-      "date": "June 2022",
-      "title": "French baccalaureate",
-      "company": "Lycée Abdel Kader",
-      "description": "Graduated from school."
-    }
-  ]
+    "id": 1,
+    "date": "September 2025 - Present",
+    "title": "Master's degree in Software Engineering",
+    "company": "Nantes Université",
+    "description": "Pursuing a Master's degree in Software Engineering with a focus on software architecture, software testing, formal verification, concurrent and distributed systems, and large-scale web and cloud technologies.",
+    "type": "education",
+    "branch": 0,
+    "parallel": false
+  },
+  {
+    "id": 2,
+    "date": "September 2022 - June 2025",
+    "title": "Bachelor's degree in Computer Science",
+    "company": "Nantes Université",
+    "description": "Bachelor's degree in Computer Science, focusing on software development, algorithms, data structures, and modern technologies. Hands-on projects and research to enhance problem-solving and programming skills.",
+    "type": "education",
+    "branch": 0,
+    "parallel": false
+  },
+  {
+    "id": 3,
+    "date": "June 2022",
+    "title": "French Baccalaureate",
+    "company": "Lycée Abdel Kader",
+    "description": "Graduated from school.",
+    "type": "milestone",
+    "branch": 0,
+    "parallel": false
+  }
+]
   
