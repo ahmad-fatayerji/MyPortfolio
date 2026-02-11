@@ -1,0 +1,54 @@
+[
+  {
+    "icon": "Code2",
+    "title": "Programming Languages",
+    "items": [
+      "C++",
+      "Java",
+      "Python",
+      "TypeScript",
+      "SQL",
+      "HTML/CSS",
+      "Bash",
+      "Rust"
+    ]
+  },
+  {
+    "icon": "Layers",
+    "title": "Frameworks",
+    "items": [
+      "Next.js",
+      "Angular",
+      "Spring Boot",
+      "JavaFX",
+      "TailwindCSS",
+      "Dear ImGUI"
+    ]
+  },
+  {
+    "icon": "Wrench",
+    "title": "Tools & Infra",
+    "items": [
+      "Git",
+      "Docker/Podman",
+      "CMake",
+      "LaTeX",
+      "Linux",
+      "Debian Servers",
+      "Domain Management",
+      "Web Hosting",
+      "VMware",
+      "Wireshark",
+      "Cisco"
+    ]
+  },
+  {
+    "icon": "Languages",
+    "title": "Spoken Languages",
+    "items": [
+      "French — Fluent",
+      "English — Fluent",
+      "Arabic — Native"
+    ]
+  }
+]

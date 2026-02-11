@@ -1,81 +1,93 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Linkedin, Github } from "lucide-react";
+import { Mail, Linkedin, Github, Send, ExternalLink } from "lucide-react";
 import Link from "next/link";
+
+const contactLinks = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "ahmad.fatayerji2004@gmail.com",
+    href: "mailto:ahmad.fatayerji2004@gmail.com",
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: "ahmad-fatayerji",
+    href: "https://www.linkedin.com/in/ahmad-fatayerji",
+    external: true,
+  },
+  {
+    icon: Github,
+    label: "GitHub",
+    value: "ahmad-fatayerji",
+    href: "https://github.com/ahmad-fatayerji",
+    external: true,
+    actionIcon: ExternalLink,
+  },
+];
 
 export default function ContactPage() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-2xl mx-auto py-8 sm:py-16"
     >
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-10"
+        transition={{ duration: 0.5 }}
+        className="text-center mb-12"
       >
-        Get in Touch
-      </motion.h1>
+        <h1 className="section-heading mb-4">
+          Get in <span className="gradient-text">Touch</span>
+        </h1>
+        <p className="text-muted-foreground max-w-md mx-auto">
+          Have a question or want to work together? I&apos;d love to hear from
+          you.
+        </p>
+      </motion.div>
 
-      <div className="glow-card border rounded-2xl px-6 py-8 sm:p-10 bg-background text-foreground shadow-md transition-colors space-y-6">
-            <motion.p
-        initial={{ opacity: 0, y: 10 }}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-        className="text-muted-foreground text-center text-sm sm:text-base"
-        >
-        Let&apos;s connect! Feel free to reach out.
-        </motion.p>
-
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-            className="flex flex-col sm:flex-row justify-center items-center sm:items-center gap-4 sm:gap-6 min-h-[64px]"
-        >
-
-          {/* Email */}
-          <a
-            href="mailto:ahmad.fatayerji2004@gmail.com"
-            className="flex items-center gap-2 text-primary hover:underline transition-all text-sm sm:text-base"
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="space-y-4"
+      >
+        {contactLinks.map((item, i) => (
+          <motion.div
+            key={item.label}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
           >
-            <Mail className="w-5 h-5" />
-            <span>ahmad.fatayerji2004@gmail.com</span>
-          </a>
-
-          {/* Divider */}
-          <span className="hidden sm:block w-px h-6 bg-border" />
-
-          {/* LinkedIn */}
-          <Link
-            href="https://www.linkedin.com/in/ahmad-fatayerji"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-primary hover:underline transition-all text-sm sm:text-base"
-          >
-            <Linkedin className="w-5 h-5" />
-            <span>LinkedIn</span>
-          </Link>
-
-          {/* Divider */}
-          <span className="hidden sm:block w-px h-6 bg-border" />
-
-          {/* GitHub */}
-          <Link
-            href="https://github.com/ahmad-fatayerji"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-primary hover:underline transition-all text-sm sm:text-base"
-          >
-            <Github className="w-5 h-5" />
-            <span>GitHub</span>
-          </Link>
-        </motion.div>
-      </div>
+            <Link
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+              className="glass-card gradient-border flex items-center gap-4 p-5 group"
+            >
+              <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
+                <item.icon className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-0.5">
+                  {item.label}
+                </p>
+                <p className="text-sm font-medium truncate">{item.value}</p>
+              </div>
+              {item.actionIcon ? (
+                <item.actionIcon className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary transition-colors flex-shrink-0" />
+              ) : (
+                <Send className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary transition-colors flex-shrink-0" />
+              )}
+            </Link>
+          </motion.div>
+        ))}
+      </motion.div>
     </motion.div>
   );
 }
