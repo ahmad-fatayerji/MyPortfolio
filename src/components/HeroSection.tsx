@@ -5,7 +5,7 @@ import { Github, Linkedin, ArrowDown, Download } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-[85vh] text-center px-4 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center min-h-[85vh] text-center px-4">
       {/* Animated floating orbs */}
       <motion.div
         className="absolute top-20 left-[15%] w-48 h-48 sm:w-72 sm:h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
