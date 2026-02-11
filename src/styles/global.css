@@ -84,7 +84,6 @@
   pointer-events: none;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .gradient-mesh::before,
@@ -98,21 +97,45 @@
 }
 
 .gradient-mesh::before {
-  width: min(600px, 80vw);
-  height: min(600px, 80vw);
+  width: 600px;
+  height: 600px;
   background: hsl(var(--gradient-from));
-  top: -10%;
-  left: -10%;
+  top: -100px;
+  left: -100px;
   animation-delay: 0s;
 }
 
 .gradient-mesh::after {
-  width: min(500px, 70vw);
-  height: min(500px, 70vw);
+  width: 500px;
+  height: 500px;
   background: hsl(var(--gradient-to));
-  bottom: -10%;
-  right: -10%;
+  bottom: -100px;
+  right: -100px;
   animation-delay: -10s;
+}
+
+/* Mobile: smaller blobs kept fully inside viewport */
+@media (max-width: 640px) {
+  .gradient-mesh::before,
+  .gradient-mesh::after {
+    filter: blur(100px);
+    opacity: 0.12;
+    animation: floatMobile 25s ease-in-out infinite;
+  }
+
+  .gradient-mesh::before {
+    width: 300px;
+    height: 300px;
+    top: 0;
+    left: -40px;
+  }
+
+  .gradient-mesh::after {
+    width: 260px;
+    height: 260px;
+    bottom: 5%;
+    right: -40px;
+  }
 }
 
 .dark .gradient-mesh::before,
@@ -126,13 +149,29 @@
     transform: translate(0, 0) scale(1);
   }
   25% {
-    transform: translate(min(80px, 8vw), -60px) scale(1.1);
+    transform: translate(80px, -60px) scale(1.1);
   }
   50% {
-    transform: translate(max(-40px, -6vw), 80px) scale(0.95);
+    transform: translate(-40px, 80px) scale(0.95);
   }
   75% {
-    transform: translate(min(60px, 6vw), 40px) scale(1.05);
+    transform: translate(60px, 40px) scale(1.05);
+  }
+}
+
+@keyframes floatMobile {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(15px, -20px) scale(1.04);
+  }
+  50% {
+    transform: translate(-10px, 25px) scale(0.97);
+  }
+  75% {
+    transform: translate(12px, 10px) scale(1.02);
   }
 }
 
