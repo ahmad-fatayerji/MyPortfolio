@@ -6,44 +6,35 @@ import { Project } from "@/types/project";
 import projectsData from "@/data/projects.json";
 
 export default function ProjectsPage() {
-  // Prefer static import for JSON with Turbopack; avoids CSR-only fetch and timing issues
   const projects = (projectsData as unknown as Project[]) ?? [];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="max-w-4xl mx-auto p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-4xl mx-auto py-8"
     >
-      <motion.h2
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-4xl font-bold text-center mb-10"
-      >
-        My Projects
-      </motion.h2>
-
       <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { staggerChildren: 0.2 },
-          },
-        }}
-        className="grid gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-16"
       >
+        <h1 className="section-heading mb-4">
+          My <span className="gradient-text">Projects</span>
+        </h1>
+        <p className="text-muted-foreground max-w-lg mx-auto">
+          A collection of things I&apos;ve built and contributed to.
+        </p>
+      </motion.div>
+
+      <div className="grid gap-5">
         {projects.length === 0 ? (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-center text-gray-500"
+            className="text-center text-muted-foreground"
           >
             No projects found.
           </motion.p>
@@ -51,17 +42,15 @@ export default function ProjectsPage() {
           projects.map((project, index) => (
             <motion.div
               key={index}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
             >
               <ProjectCard project={project} />
             </motion.div>
           ))
         )}
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
