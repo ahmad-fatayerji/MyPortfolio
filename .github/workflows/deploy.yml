@@ -21,7 +21,7 @@ jobs:
           script: |
             set -euo pipefail
 
-            APP_DIR=/opt/ahmadfatayerji
+            APP_DIR=/opt/MyPortfolio
  
             if [ ! -d "$APP_DIR/.git" ]; then
               echo "ERROR: $APP_DIR is missing a git repo. Clone it once on the server."
@@ -30,9 +30,6 @@ jobs:
 
             cd "$APP_DIR"
 
-            # Make ops scripts executable (Windows/Git perms safety)
-            chmod +x ops/*.sh || true
-
             # Ensure git can operate even if ownership changed at some point
             git config --global --add safe.directory "$APP_DIR" || true
 
@@ -40,8 +37,13 @@ jobs:
             export XDG_RUNTIME_DIR="/run/user/$(id -u)"
             export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 
-            # Run deployment (pull, build, restart)
-            GIT_PULL=1 ops/podman-quadlet-deploy.sh
+            # Pull latest before running the deploy script (avoid stale paths)
+            git fetch --all --prune
+            git checkout production
+            git pull --ff-only origin production
+
+            # Run deployment (build, restart)
+            GIT_PULL=0 bash ops/podman-quadlet-deploy.sh
 
             # Optional: show status at end (helps Actions logs)
             systemctl --user daemon-reload || true

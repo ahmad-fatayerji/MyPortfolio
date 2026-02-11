@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/opt/ahmadfatayerji}"
+SCRIPT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+APP_DIR="${APP_DIR:-$SCRIPT_ROOT}"
 QUADLET_DIR="${QUADLET_DIR:-$HOME/.config/containers/systemd}"
 TEMPLATE_FILE="$APP_DIR/ops/quadlet/ahmadfatayerji-web.container"
 GIT_REF="${GIT_REF:-production}"
@@ -33,11 +34,14 @@ echo "==> Reloading systemd user units"
 systemctl --user daemon-reload
 sleep 2
 
-UNIT="ahmadfatayerji-web.service"
-if systemctl --user is-active --quiet "$UNIT"; then
-  systemctl --user restart "$UNIT"
+UNIT_CONTAINER_PATH="$QUADLET_DIR/ahmadfatayerji-web.container"
+UNIT_SERVICE="ahmadfatayerji-web.service"
+
+# Enable via absolute path to avoid .container -> .service suffix confusion.
+if systemctl --user enable --now "$UNIT_CONTAINER_PATH" 2>/dev/null; then
+  systemctl --user restart "$UNIT_SERVICE"
 else
-  systemctl --user enable --now "$UNIT"
+  systemctl --user restart "$UNIT_SERVICE"
 fi
 
 echo "==> Health check"
