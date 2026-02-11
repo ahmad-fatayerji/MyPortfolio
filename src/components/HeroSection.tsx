@@ -8,7 +8,7 @@ export default function HeroSection() {
     <section className="relative flex flex-col items-center justify-center min-h-[85vh] text-center px-4 overflow-hidden">
       {/* Animated floating orbs */}
       <motion.div
-        className="absolute top-20 left-[15%] w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
+        className="absolute top-20 left-[15%] w-48 h-48 sm:w-72 sm:h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
         style={{
           background:
             "linear-gradient(135deg, hsl(262 83% 58%), hsl(190 95% 50%))",
@@ -21,7 +21,7 @@ export default function HeroSection() {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-20 right-[10%] w-96 h-96 rounded-full opacity-15 blur-3xl pointer-events-none"
+        className="absolute bottom-20 right-[10%] w-56 h-56 sm:w-96 sm:h-96 rounded-full opacity-15 blur-3xl pointer-events-none"
         style={{
           background:
             "linear-gradient(135deg, hsl(190 95% 50%), hsl(262 83% 58%))",
@@ -46,7 +46,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
+          className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
         >
           Hi, I&apos;m <span className="gradient-text">Ahmad FATAYERJI</span>
         </motion.h1>

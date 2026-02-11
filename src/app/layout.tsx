@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="relative flex flex-col min-h-screen">
             <Navbar />
 
-            <main className="flex-1 container mx-auto px-6 pt-24 pb-12 max-w-6xl">
+            <main className="flex-1 container mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-12 max-w-6xl">
               {children}
             </main>
 
