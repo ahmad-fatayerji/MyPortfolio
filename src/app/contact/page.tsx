@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Mail, Linkedin, Github, Send, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
@@ -30,13 +30,13 @@ const contactLinks = [
 
 export default function ContactPage() {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
     >
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -49,16 +49,16 @@ export default function ContactPage() {
           Have a question or want to work together? I&apos;d love to hear from
           you.
         </p>
-      </motion.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className="space-y-4"
       >
         {contactLinks.map((item, i) => (
-          <motion.div
+          <m.div
             key={item.label}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -87,9 +87,9 @@ export default function ContactPage() {
                 <Send className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary transition-colors flex-shrink-0" />
               )}
             </Link>
-          </motion.div>
+          </m.div>
         ))}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }

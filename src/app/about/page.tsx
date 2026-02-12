@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Code2, Layers, Wrench, Languages } from "lucide-react";
 import skillsData from "@/data/skills.json";
 
@@ -20,13 +20,13 @@ const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } =
 
 export default function AboutPage() {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto py-8 sm:py-16"
     >
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -40,9 +40,9 @@ export default function AboutPage() {
           Master&apos;s in Software Engineering at Nantes Universit&eacute;. I
           love building modern, clean applications that solve real problems.
         </p>
-      </motion.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -51,7 +51,7 @@ export default function AboutPage() {
         {skillsData.map((skill: Skill, i) => {
           const IconComponent = iconMap[skill.icon];
           return (
-            <motion.div
+            <m.div
               key={skill.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,10 +71,10 @@ export default function AboutPage() {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           );
         })}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }

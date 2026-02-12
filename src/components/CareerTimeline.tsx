@@ -1,13 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { GraduationCap, Award } from "lucide-react";
 import experiences from "@/data/experiences.json";
 
 export default function CareerTimeline() {
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -20,7 +20,7 @@ export default function CareerTimeline() {
         <p className="text-muted-foreground max-w-lg mx-auto">
           My academic journey and professional milestones.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="relative max-w-3xl mx-auto">
         {/* Gradient timeline line */}
@@ -34,7 +34,7 @@ export default function CareerTimeline() {
 
         <div className="space-y-10 md:space-y-20">
           {experiences.map((exp, index) => (
-            <motion.div
+            <m.div
               key={exp.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -93,7 +93,7 @@ export default function CareerTimeline() {
                   {exp.description}
                 </p>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

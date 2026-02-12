@@ -4,11 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -127,9 +123,12 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div ref={desktopNavRef} className="relative hidden md:flex items-center gap-1">
+          <div
+            ref={desktopNavRef}
+            className="relative hidden md:flex items-center gap-1"
+          >
             {indicator.ready && (
-              <motion.div
+              <m.div
                 aria-hidden
                 className="pointer-events-none absolute rounded-lg bg-primary/10 z-0"
                 initial={false}
@@ -176,7 +175,7 @@ export default function Navbar() {
       {/* Mobile menu overlay rendered outside nav to avoid stacking context issues */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             key="mobile-menu"
             className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-sm md:backdrop-blur-2xl flex flex-col"
             initial={{ opacity: 0 }}
@@ -206,7 +205,7 @@ export default function Navbar() {
             </div>
 
             {/* Links */}
-            <motion.div
+            <m.div
               className="flex-1 flex flex-col items-center justify-center gap-8"
               initial={{ y: prefersReducedMotion ? 0 : 12, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -217,7 +216,8 @@ export default function Navbar() {
               }}
             >
               {navLinks.map((link) => {
-                const isActive = normalizedPathname === normalizePath(link.href);
+                const isActive =
+                  normalizedPathname === normalizePath(link.href);
                 return (
                   <Link
                     key={link.href}
@@ -233,8 +233,8 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>
