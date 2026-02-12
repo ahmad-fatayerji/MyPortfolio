@@ -179,8 +179,7 @@
 
 /* ─── Glass Card ─── */
 .glass-card {
-  @apply rounded-2xl border transition-[border-color,box-shadow] duration-300;
-  contain: content;
+  @apply rounded-2xl border transition-all duration-300;
   background: hsl(var(--card) / 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -256,7 +255,7 @@
 
 /* ─── Gradient Button ─── */
 .btn-gradient {
-  @apply relative inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-white transition-[transform,box-shadow] duration-300;
+  @apply relative inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold text-white transition-all duration-300;
   background: linear-gradient(
     135deg,
     hsl(var(--gradient-from)),
@@ -265,11 +264,9 @@
   box-shadow: 0 4px 15px hsl(var(--gradient-from) / 0.25);
 }
 
-@media (hover: hover) {
-  .btn-gradient:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 25px hsl(var(--gradient-from) / 0.35);
-  }
+.btn-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px hsl(var(--gradient-from) / 0.35);
 }
 
 .btn-gradient:active {
@@ -327,110 +324,18 @@
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 
-/* Theme switch animation (scoped to avoid Safari compositing glitches) */
-html.theme-transition
-  :where(
-    a,
-    button,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    span,
-    small,
-    strong,
-    em,
-    li,
-    input,
-    textarea,
-    select,
-    label,
-    svg,
-    path,
-    [class*="bg-"],
-    [class*="text-"],
-    [class*="border-"]
-  ) {
+/* Animate color tokens briefly during theme switches */
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
   transition-property:
-    color, background-color, border-color, text-decoration-color, fill, stroke,
+    color,
+    background-color,
+    border-color,
+    text-decoration-color,
+    fill,
+    stroke,
     box-shadow;
   transition-duration: 320ms;
   transition-timing-function: ease;
-}
-
-/* Avoid transitioning high-cost composited layers on mobile Safari */
-html.theme-transition .gradient-mesh,
-html.theme-transition .noise-overlay,
-html.theme-transition .glass-card,
-html.theme-transition [class*="backdrop-blur"] {
-  transition: none !important;
-}
-
-/* Force WebKit compositor to repaint gradient blobs during theme switch.
-   The pseudo-elements sit on GPU layers (filter + animation) and Safari
-   sometimes skips repainting them when only an ancestor class changes.
-   A brief opacity transition makes the compositor process the new value. */
-html.theme-transition .gradient-mesh::before,
-html.theme-transition .gradient-mesh::after {
-  transition: opacity 80ms linear !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.theme-transition :where(*) {
-    transition: none !important;
-  }
-}
-
-/* ─── Mobile Performance Mode ─── 
-   Expensive backdrop-filter, large blurred pseudo-elements, and noise
-   overlays heavily tax mobile GPUs.  Disable or simplify them for all
-   touch/coarse-pointer devices, not just iOS Safari. */
-@media (hover: none) and (pointer: coarse) {
-  .gradient-mesh::before,
-  .gradient-mesh::after {
-    animation: none;
-    filter: blur(72px);
-    opacity: 0.1;
-    transform: none;
-  }
-
-  .noise-overlay {
-    display: none;
-  }
-
-  .glass-card {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: hsl(var(--card) / 0.92);
-    transition-duration: 150ms;
-  }
-
-  .dark .glass-card {
-    background: hsl(var(--card) / 0.85);
-  }
-
-  [class*="backdrop-blur"] {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  /* Gradient border pseudo-element: disable transition on mobile */
-  .gradient-border::before {
-    transition: none;
-  }
-
-  /* Reduce Navbar backdrop cost */
-  nav[class*="backdrop-blur"] {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: hsl(var(--background) / 0.95) !important;
-  }
-
-  /* Shorten all general transitions on mobile */
-  .btn-gradient {
-    transition-duration: 150ms;
-  }
 }

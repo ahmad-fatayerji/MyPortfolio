@@ -9,26 +9,6 @@ export function ThemeToggle() {
   const [mounted, setMounted] = React.useState(false);
   const timeoutRef = React.useRef<number | null>(null);
 
-  const isMobileWebKit = React.useCallback(() => {
-    const ua = window.navigator.userAgent;
-    const isIOS = /iP(ad|hone|od)/.test(ua);
-    const isWebKit = /WebKit/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
-    return isIOS && isWebKit;
-  }, []);
-
-  const forceMobileRepaint = React.useCallback(() => {
-    const root = document.documentElement;
-    const previousWillChange = root.style.willChange;
-
-    root.style.willChange = "background-color, color";
-    // Force style and layout flush to avoid stale compositing after theme swap.
-    void root.offsetHeight;
-
-    window.requestAnimationFrame(() => {
-      root.style.willChange = previousWillChange;
-    });
-  }, []);
-
   React.useEffect(() => {
     setMounted(true);
     return () => {
@@ -38,18 +18,6 @@ export function ThemeToggle() {
       document.documentElement.classList.remove("theme-transition");
     };
   }, []);
-
-  // Run repaint AFTER next-themes has applied the class in its own useEffect.
-  // A rAF ensures all effects from this commit batch have completed.
-  React.useEffect(() => {
-    if (!mounted || !isMobileWebKit()) return;
-
-    const id = requestAnimationFrame(() => {
-      forceMobileRepaint();
-    });
-
-    return () => cancelAnimationFrame(id);
-  }, [resolvedTheme, mounted, isMobileWebKit, forceMobileRepaint]);
 
   const currentTheme = theme === "system" ? resolvedTheme : theme;
   const nextTheme = currentTheme === "dark" ? "light" : "dark";
@@ -65,7 +33,7 @@ export function ThemeToggle() {
     timeoutRef.current = window.setTimeout(() => {
       document.documentElement.classList.remove("theme-transition");
       timeoutRef.current = null;
-    }, 320);
+    }, 350);
   };
 
   return (

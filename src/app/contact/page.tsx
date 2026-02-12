@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, Send, ExternalLink } from "lucide-react";
-import { useMotionConfig } from "@/lib/useMotionConfig";
 import Link from "next/link";
 
 const contactLinks = [
@@ -30,20 +29,17 @@ const contactLinks = [
 ];
 
 export default function ContactPage() {
-  const m = useMotionConfig();
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: m.duration(0.4) }}
+      transition={{ duration: 0.5 }}
       className="max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
     >
       <motion.div
-        initial={{ opacity: 0, y: m.yOffset }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={m.viewport}
-        transition={{ duration: m.duration(0.5) }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className="text-center mb-12"
       >
         <h1 className="section-heading mb-4">
@@ -56,19 +52,17 @@ export default function ContactPage() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: m.yOffset }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={m.viewport}
-        transition={{ duration: m.duration(0.4), delay: m.stagger(1) }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
         className="space-y-4"
       >
         {contactLinks.map((item, i) => (
           <motion.div
             key={item.label}
-            initial={{ opacity: 0, x: m.isMobile ? 0 : -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={m.viewport}
-            transition={{ duration: m.duration(0.35), delay: m.stagger(i) }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
           >
             <Link
               href={item.href}
