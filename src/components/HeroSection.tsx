@@ -1,13 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Github, Linkedin, ArrowDown, Download } from "lucide-react";
 
 export default function HeroSection() {
   return (
     <section className="relative flex flex-col items-center justify-center min-h-[85vh] text-center px-4">
       {/* Animated floating orbs */}
-      <motion.div
+      <m.div
         className="absolute top-20 left-[15%] w-48 h-48 sm:w-72 sm:h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
         style={{
           background:
@@ -20,7 +20,7 @@ export default function HeroSection() {
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
+      <m.div
         className="absolute bottom-20 right-[10%] w-56 h-56 sm:w-96 sm:h-96 rounded-full opacity-15 blur-3xl pointer-events-none"
         style={{
           background:
@@ -35,24 +35,24 @@ export default function HeroSection() {
       />
 
       {/* Content */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 max-w-3xl"
       >
         {/* Name */}
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
         >
           Hi, I&apos;m <span className="gradient-text">Ahmad FATAYERJI</span>
-        </motion.h1>
+        </m.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
@@ -60,10 +60,10 @@ export default function HeroSection() {
         >
           Software engineer passionate about building modern, performant
           applications and crafting elegant digital experiences.
-        </motion.p>
+        </m.p>
 
         {/* CTA Buttons */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -83,10 +83,10 @@ export default function HeroSection() {
           >
             Get in Touch
           </a>
-        </motion.div>
+        </m.div>
 
         {/* Social Icons */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.65 }}
@@ -110,23 +110,23 @@ export default function HeroSection() {
           >
             <Linkedin className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </a>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <motion.div
+        <m.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           <ArrowDown className="w-5 h-5 text-muted-foreground/50" />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </section>
   );
 }

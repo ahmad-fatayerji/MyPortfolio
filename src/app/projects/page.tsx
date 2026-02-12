@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import ProjectCard from "@/app/projects/ProjectCard";
 import { Project } from "@/types/project";
 import projectsData from "@/data/projects.json";
@@ -9,13 +9,13 @@ export default function ProjectsPage() {
   const projects = (projectsData as unknown as Project[]) ?? [];
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto py-8"
     >
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -27,30 +27,30 @@ export default function ProjectsPage() {
         <p className="text-muted-foreground max-w-lg mx-auto">
           A collection of things I&apos;ve built and contributed to.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="grid gap-5">
         {projects.length === 0 ? (
-          <motion.p
+          <m.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center text-muted-foreground"
           >
             No projects found.
-          </motion.p>
+          </m.p>
         ) : (
           projects.map((project, index) => (
-            <motion.div
+            <m.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
             >
               <ProjectCard project={project} />
-            </motion.div>
+            </m.div>
           ))
         )}
       </div>
-    </motion.div>
+    </m.div>
   );
 }

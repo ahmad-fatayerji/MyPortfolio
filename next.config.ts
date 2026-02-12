@@ -5,6 +5,21 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
 
+  // Optimize package imports for better tree-shaking
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-slot",
+    ],
+  },
+
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+  },
+
   // Turbopack is default in Next 16
   turbopack: {
     // Map import specifier "@" to the src folder
@@ -14,6 +29,48 @@ const nextConfig: NextConfig = {
       // (Optional) if you prefer "@/..." style specifically:
       // "@/": "./src/"
     }
+  },
+
+  // Add cache headers for static assets
+  async headers() {
+    return [
+      {
+        source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:all*(woff|woff2|ttf|otf|eot)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:all*(js|css)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
   },
 
   async redirects() {

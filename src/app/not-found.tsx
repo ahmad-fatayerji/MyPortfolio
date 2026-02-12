@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
       {/* Glowing 404 */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -27,10 +27,10 @@ export default function NotFound() {
               "linear-gradient(135deg, hsl(262 83% 58%), hsl(190 95% 50%))",
           }}
         />
-      </motion.div>
+      </m.div>
 
       {/* Message */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -39,10 +39,10 @@ export default function NotFound() {
         <p className="text-muted-foreground max-w-md mx-auto mb-10 leading-relaxed">
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
-      </motion.div>
+      </m.div>
 
       {/* Actions */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.35 }}
@@ -59,7 +59,7 @@ export default function NotFound() {
           <ArrowLeft className="w-4 h-4" />
           Go Back
         </button>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

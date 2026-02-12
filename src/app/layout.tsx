@@ -10,6 +10,8 @@ import "../styles/global.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap", // Improves font loading performance
+  preload: true,
 });
 
 export const metadata: Metadata = {
