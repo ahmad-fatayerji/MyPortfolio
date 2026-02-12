@@ -2,19 +2,16 @@
 
 import { motion } from "framer-motion";
 import { GraduationCap, Award } from "lucide-react";
-import { useMotionConfig } from "@/lib/useMotionConfig";
 import experiences from "@/data/experiences.json";
 
 export default function CareerTimeline() {
-  const m = useMotionConfig();
-
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6">
       <motion.div
-        initial={{ opacity: 0, y: m.yOffset }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={m.viewport}
-        transition={{ duration: m.duration(0.6) }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         className="text-center mb-16"
       >
         <h2 className="section-heading mb-4">
@@ -39,13 +36,10 @@ export default function CareerTimeline() {
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.id}
-              initial={{ opacity: 0, y: m.isMobile ? 15 : 40 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: m.duration(0.5),
-                delay: m.stagger(index, 0.1),
-              }}
-              viewport={m.viewport}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              viewport={{ once: true }}
               className={`relative flex flex-col md:flex-row md:items-start gap-4 md:gap-6 ${
                 index % 2 === 0 ? "md:flex-row-reverse" : ""
               }`}

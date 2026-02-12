@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Code2, Layers, Wrench, Languages } from "lucide-react";
-import { useMotionConfig } from "@/lib/useMotionConfig";
 import skillsData from "@/data/skills.json";
 
 interface Skill {
@@ -20,20 +19,17 @@ const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } =
   };
 
 export default function AboutPage() {
-  const m = useMotionConfig();
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: m.duration(0.4) }}
+      transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto py-8 sm:py-16"
     >
       <motion.div
-        initial={{ opacity: 0, y: m.yOffset }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={m.viewport}
-        transition={{ duration: m.duration(0.5) }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className="text-center mb-16"
       >
         <h1 className="section-heading mb-4">
@@ -46,16 +42,20 @@ export default function AboutPage() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+      >
         {skillsData.map((skill: Skill, i) => {
           const IconComponent = iconMap[skill.icon];
           return (
             <motion.div
               key={skill.title}
-              initial={{ opacity: 0, y: m.yOffset }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={m.viewport}
-              transition={{ duration: m.duration(0.4), delay: m.stagger(i) }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
               className="glass-card gradient-border p-6 group"
             >
               <div className="flex items-center gap-3 mb-4">
@@ -74,7 +74,7 @@ export default function AboutPage() {
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
