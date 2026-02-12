@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -15,10 +15,19 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+function normalizePath(path: string) {
+  if (path === "/") {
+    return "/";
+  }
+  return path.replace(/\/+$/, "");
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const pathname = usePathname();
+  const normalizedPathname = normalizePath(pathname);
+  const prefersReducedMotion = useReducedMotion();
 
   // Close menu on route change
   React.useEffect(() => {
@@ -63,7 +72,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               className="text-foreground p-1 relative z-50"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen((prev) => !prev)}
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={22} /> : <Menu size={22} />}
@@ -73,7 +82,7 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = normalizedPathname === normalizePath(link.href);
               return (
                 <Link
                   key={link.href}
@@ -106,16 +115,16 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu overlay — rendered outside nav to avoid stacking context issues */}
+      {/* Mobile menu overlay rendered outside nav to avoid stacking context issues */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             key="mobile-menu"
-            className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-2xl flex flex-col"
+            className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-sm md:backdrop-blur-2xl flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.16 }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4">
@@ -141,32 +150,29 @@ export default function Navbar() {
             {/* Links */}
             <motion.div
               className="flex-1 flex flex-col items-center justify-center gap-8"
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: prefersReducedMotion ? 0 : 12, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              exit={{ y: prefersReducedMotion ? 0 : 8, opacity: 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.2,
+                delay: prefersReducedMotion ? 0 : 0.04,
+              }}
             >
-              {navLinks.map((link, i) => {
-                const isActive = pathname === link.href;
+              {navLinks.map((link) => {
+                const isActive = normalizedPathname === normalizePath(link.href);
                 return (
-                  <motion.div
+                  <Link
                     key={link.href}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + i * 0.08 }}
+                    href={link.href}
+                    className={`text-2xl font-semibold transition-colors ${
+                      isActive
+                        ? "gradient-text"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    onClick={() => setIsOpen(false)}
                   >
-                    <Link
-                      href={link.href}
-                      className={`text-2xl font-semibold transition-colors ${
-                        isActive
-                          ? "gradient-text"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
+                    {link.label}
+                  </Link>
                 );
               })}
             </motion.div>
