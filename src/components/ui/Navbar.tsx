@@ -167,7 +167,7 @@ export default function Navbar() {
                     className={`text-2xl font-semibold transition-colors ${
                       isActive
                         ? "gradient-text"
-                        : "text-muted-foreground hover:text-foreground"
+                        : "text-muted-foreground md:hover:text-foreground"
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
