@@ -5,6 +5,21 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
 
+  // Optimize package imports for better tree-shaking
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-slot",
+    ],
+  },
+
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+  },
+
   // Turbopack is default in Next 16
   turbopack: {
     // Map import specifier "@" to the src folder
