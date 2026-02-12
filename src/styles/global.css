@@ -64,6 +64,7 @@
     scroll-behavior: smooth;
     width: 100%;
     height: 100%;
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-background text-foreground;

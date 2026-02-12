@@ -34,7 +34,7 @@ export default function ContactPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-2xl mx-auto py-8 sm:py-16"
+      className="max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -68,7 +68,7 @@ export default function ContactPage() {
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noopener noreferrer" : undefined}
-              className="glass-card gradient-border flex items-center gap-4 p-5 group"
+              className="glass-card gradient-border flex items-center gap-4 p-5 group text-foreground"
             >
               <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
                 <item.icon className="w-5 h-5 text-primary" />
@@ -77,7 +77,9 @@ export default function ContactPage() {
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-0.5">
                   {item.label}
                 </p>
-                <p className="text-sm font-medium truncate">{item.value}</p>
+                <p className="text-sm font-medium text-foreground truncate">
+                  {item.value}
+                </p>
               </div>
               {item.actionIcon ? (
                 <item.actionIcon className="w-4 h-4 text-muted-foreground/40 group-hover:text-primary transition-colors flex-shrink-0" />
