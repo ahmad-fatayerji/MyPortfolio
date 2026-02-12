@@ -79,7 +79,7 @@ export default function HeroSection() {
           </a>
           <a
             href="/contact"
-            className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold border border-border bg-card/50 backdrop-blur-sm hover:bg-card hover:border-primary/30 transition-all duration-300"
+            className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold border border-border bg-card/50 backdrop-blur-sm md:hover:bg-card md:hover:border-primary/30 transition-all duration-300"
           >
             Get in Touch
           </a>

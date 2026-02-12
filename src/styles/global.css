@@ -64,6 +64,7 @@
     scroll-behavior: smooth;
     width: 100%;
     height: 100%;
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-background text-foreground;
@@ -321,4 +322,20 @@
 /* ─── Glow ring on focus ─── */
 .focus-ring {
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+}
+
+/* Animate color tokens briefly during theme switches */
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition-property:
+    color,
+    background-color,
+    border-color,
+    text-decoration-color,
+    fill,
+    stroke,
+    box-shadow;
+  transition-duration: 320ms;
+  transition-timing-function: ease;
 }
