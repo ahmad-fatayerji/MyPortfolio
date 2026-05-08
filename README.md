@@ -41,6 +41,12 @@ yarn dev
 pnpm dev
 ```
 
+For testing on phones/tablets over your local network, prefer a clean webpack dev server instead of the default Turbopack path:
+
+```bash
+npm run dev:clean:lan
+```
+
 ## 📂 Project Structure
 
 - src/app: Contains page layouts and routes

@@ -1,74 +1,41 @@
 "use client";
 
-import { m } from "framer-motion";
 import { Github, Linkedin, ArrowDown, Download } from "lucide-react";
 
 export default function HeroSection() {
   return (
     <section className="relative flex flex-col items-center justify-center min-h-[85vh] text-center px-4">
       {/* Animated floating orbs */}
-      <m.div
-        className="absolute top-20 left-[15%] w-48 h-48 sm:w-72 sm:h-72 rounded-full opacity-20 blur-3xl pointer-events-none"
+      <div
+        className="absolute top-20 left-[15%] h-48 w-48 rounded-full opacity-20 blur-3xl pointer-events-none sm:h-72 sm:w-72"
         style={{
           background:
             "linear-gradient(135deg, hsl(262 83% 58%), hsl(190 95% 50%))",
         }}
-        animate={{
-          x: [0, 40, -20, 0],
-          y: [0, -30, 20, 0],
-          scale: [1, 1.1, 0.95, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
-      <m.div
-        className="absolute bottom-20 right-[10%] w-56 h-56 sm:w-96 sm:h-96 rounded-full opacity-15 blur-3xl pointer-events-none"
+      <div
+        className="absolute bottom-20 right-[10%] h-56 w-56 rounded-full opacity-15 blur-3xl pointer-events-none sm:h-96 sm:w-96"
         style={{
           background:
             "linear-gradient(135deg, hsl(190 95% 50%), hsl(262 83% 58%))",
         }}
-        animate={{
-          x: [0, -50, 30, 0],
-          y: [0, 40, -20, 0],
-          scale: [1, 0.9, 1.1, 1],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
 
       {/* Content */}
-      <m.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 max-w-3xl"
-      >
+      <div className="relative z-10 max-w-3xl">
         {/* Name */}
-        <m.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
-        >
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
           Hi, I&apos;m <span className="gradient-text">Ahmad FATAYERJI</span>
-        </m.h1>
+        </h1>
 
         {/* Subtitle */}
-        <m.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
-        >
+        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
           Software engineer passionate about building modern, performant
           applications and crafting elegant digital experiences.
-        </m.p>
+        </p>
 
         {/* CTA Buttons */}
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-12"
-        >
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
           <a
             href="/Ahmad_FATAYERJI_CV.pdf"
             download
@@ -83,15 +50,10 @@ export default function HeroSection() {
           >
             Get in Touch
           </a>
-        </m.div>
+        </div>
 
         {/* Social Icons */}
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.65 }}
-          className="flex items-center justify-center gap-4"
-        >
+        <div className="flex items-center justify-center gap-4">
           <a
             href="https://github.com/ahmad-fatayerji"
             target="_blank"
@@ -110,23 +72,15 @@ export default function HeroSection() {
           >
             <Linkedin className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </a>
-        </m.div>
-      </m.div>
+        </div>
+      </div>
 
       {/* Scroll indicator */}
-      <m.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <m.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div>
           <ArrowDown className="w-5 h-5 text-muted-foreground/50" />
-        </m.div>
-      </m.div>
+        </div>
+      </div>
     </section>
   );
 }

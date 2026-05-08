@@ -3,37 +3,44 @@
 import * as React from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
+import { useIsAppleMobileWebKit } from "@/lib/useIsAppleMobileWebKit";
 
 export function ThemeToggle() {
-  const { theme, resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
-  const timeoutRef = React.useRef<number | null>(null);
+  const reloadTimeoutRef = React.useRef<number | null>(null);
+  const isAppleMobileWebKit = useIsAppleMobileWebKit();
 
   React.useEffect(() => {
     setMounted(true);
     return () => {
-      if (timeoutRef.current) {
-        window.clearTimeout(timeoutRef.current);
+      if (reloadTimeoutRef.current) {
+        window.clearTimeout(reloadTimeoutRef.current);
       }
-      document.documentElement.classList.remove("theme-transition");
     };
   }, []);
 
-  const currentTheme = theme === "system" ? resolvedTheme : theme;
-  const nextTheme = currentTheme === "dark" ? "light" : "dark";
-
   const handleToggleTheme = () => {
-    document.documentElement.classList.add("theme-transition");
+    const isDark = resolvedTheme === "dark";
+    const nextTheme = isDark ? "light" : "dark";
+
     setTheme(nextTheme);
 
-    if (timeoutRef.current) {
-      window.clearTimeout(timeoutRef.current);
+    if (!isAppleMobileWebKit) {
+      return;
     }
 
-    timeoutRef.current = window.setTimeout(() => {
-      document.documentElement.classList.remove("theme-transition");
-      timeoutRef.current = null;
-    }, 350);
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    document.documentElement.style.colorScheme = nextTheme;
+    window.localStorage.setItem("theme", nextTheme);
+
+    if (reloadTimeoutRef.current) {
+      window.clearTimeout(reloadTimeoutRef.current);
+    }
+
+    reloadTimeoutRef.current = window.setTimeout(() => {
+      window.location.reload();
+    }, 120);
   };
 
   return (
@@ -44,8 +51,14 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
       disabled={!mounted}
     >
-      <Sun className="h-4 w-4 text-muted-foreground dark:hidden" />
-      <Moon className="hidden h-4 w-4 text-muted-foreground dark:block" />
+      {mounted ? (
+        <>
+          <Sun className="h-4 w-4 text-muted-foreground dark:hidden" />
+          <Moon className="hidden h-4 w-4 text-muted-foreground dark:block" />
+        </>
+      ) : (
+        <span className="h-4 w-4" aria-hidden />
+      )}
     </button>
   );
 }
