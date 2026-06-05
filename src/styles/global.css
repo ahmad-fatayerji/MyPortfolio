@@ -96,6 +96,7 @@
   filter: blur(120px);
   opacity: 0.15;
   animation: float 20s ease-in-out infinite;
+  will-change: transform;
 }
 
 .gradient-mesh::before {
@@ -292,6 +293,19 @@
   background-repeat: repeat;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .gradient-mesh::before,
+  .gradient-mesh::after,
+  .animate-fade-in-up {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 /* ─── Tag Pill ─── */
 .tag-pill {
   @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium tracking-wide transition-colors;
@@ -324,18 +338,29 @@
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 
-/* Animate color tokens briefly during theme switches */
-html.theme-transition *,
-html.theme-transition *::before,
-html.theme-transition *::after {
-  transition-property:
-    color,
-    background-color,
-    border-color,
-    text-decoration-color,
-    fill,
-    stroke,
-    box-shadow;
-  transition-duration: 320ms;
-  transition-timing-function: ease;
+/* iOS Safari struggles with full-screen animated blur layers and strong backdrop filters */
+html.ios-safari .gradient-mesh::before,
+html.ios-safari .gradient-mesh::after {
+  animation: none;
+  transform: none;
+  filter: blur(72px);
+  opacity: 0.11;
+}
+
+html.ios-safari .gradient-mesh::before {
+  width: min(56vw, 280px);
+  height: min(56vw, 280px);
+  top: 0;
+  left: -24px;
+}
+
+html.ios-safari .gradient-mesh::after {
+  width: min(52vw, 240px);
+  height: min(52vw, 240px);
+  right: -24px;
+  bottom: 12%;
+}
+
+html.ios-safari .noise-overlay {
+  opacity: 0.008;
 }

@@ -1,26 +1,19 @@
 "use client";
 
-import { m } from "framer-motion";
 import { GraduationCap, Award } from "lucide-react";
 import experiences from "@/data/experiences.json";
 
 export default function CareerTimeline() {
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6">
-      <m.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-16"
-      >
+      <div className="text-center mb-16">
         <h2 className="section-heading mb-4">
           Career <span className="gradient-text">History</span>
         </h2>
         <p className="text-muted-foreground max-w-lg mx-auto">
           My academic journey and professional milestones.
         </p>
-      </m.div>
+      </div>
 
       <div className="relative max-w-3xl mx-auto">
         {/* Gradient timeline line */}
@@ -34,12 +27,8 @@ export default function CareerTimeline() {
 
         <div className="space-y-10 md:space-y-20">
           {experiences.map((exp, index) => (
-            <m.div
+            <div
               key={exp.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              viewport={{ once: true }}
               className={`relative flex flex-col md:flex-row md:items-start gap-4 md:gap-6 ${
                 index % 2 === 0 ? "md:flex-row-reverse" : ""
               }`}
@@ -93,7 +82,7 @@ export default function CareerTimeline() {
                   {exp.description}
                 </p>
               </div>
-            </m.div>
+            </div>
           ))}
         </div>
       </div>

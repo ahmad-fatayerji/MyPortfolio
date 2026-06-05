@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { Mail, Linkedin, Github, Send, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { useLiteMotion } from "@/lib/useLiteMotion";
 
 const contactLinks = [
   {
@@ -29,17 +30,19 @@ const contactLinks = [
 ];
 
 export default function ContactPage() {
+  const useLite = useLiteMotion();
+
   return (
     <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={useLite ? false : { opacity: 0 }}
+      animate={useLite ? undefined : { opacity: 1 }}
+      transition={useLite ? undefined : { duration: 0.5 }}
       className="max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
     >
       <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={useLite ? false : { opacity: 0, y: 20 }}
+        animate={useLite ? undefined : { opacity: 1, y: 0 }}
+        transition={useLite ? undefined : { duration: 0.5 }}
         className="text-center mb-12"
       >
         <h1 className="section-heading mb-4">
@@ -52,17 +55,17 @@ export default function ContactPage() {
       </m.div>
 
       <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        initial={useLite ? false : { opacity: 0, y: 20 }}
+        animate={useLite ? undefined : { opacity: 1, y: 0 }}
+        transition={useLite ? undefined : { duration: 0.5, delay: 0.2 }}
         className="space-y-4"
       >
         {contactLinks.map((item, i) => (
           <m.div
             key={item.label}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+            initial={useLite ? false : { opacity: 0, x: -20 }}
+            animate={useLite ? undefined : { opacity: 1, x: 0 }}
+            transition={useLite ? undefined : { duration: 0.4, delay: 0.3 + i * 0.1 }}
           >
             <Link
               href={item.href}

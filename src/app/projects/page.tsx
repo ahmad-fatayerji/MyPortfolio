@@ -4,21 +4,23 @@ import { m } from "framer-motion";
 import ProjectCard from "@/app/projects/ProjectCard";
 import { Project } from "@/types/project";
 import projectsData from "@/data/projects.json";
+import { useLiteMotion } from "@/lib/useLiteMotion";
 
 export default function ProjectsPage() {
   const projects = (projectsData as unknown as Project[]) ?? [];
+  const useLite = useLiteMotion();
 
   return (
     <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={useLite ? false : { opacity: 0 }}
+      animate={useLite ? undefined : { opacity: 1 }}
+      transition={useLite ? undefined : { duration: 0.5 }}
       className="max-w-4xl mx-auto py-8"
     >
       <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={useLite ? false : { opacity: 0, y: 20 }}
+        animate={useLite ? undefined : { opacity: 1, y: 0 }}
+        transition={useLite ? undefined : { duration: 0.5 }}
         className="text-center mb-16"
       >
         <h1 className="section-heading mb-4">
@@ -32,8 +34,9 @@ export default function ProjectsPage() {
       <div className="grid gap-5">
         {projects.length === 0 ? (
           <m.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={useLite ? false : { opacity: 0 }}
+            animate={useLite ? undefined : { opacity: 1 }}
+            transition={useLite ? undefined : { duration: 0.3 }}
             className="text-center text-muted-foreground"
           >
             No projects found.
@@ -42,9 +45,9 @@ export default function ProjectsPage() {
           projects.map((project, index) => (
             <m.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+              initial={useLite ? false : { opacity: 0, y: 20 }}
+              animate={useLite ? undefined : { opacity: 1, y: 0 }}
+              transition={useLite ? undefined : { duration: 0.4, delay: index * 0.1 }}
             >
               <ProjectCard project={project} />
             </m.div>

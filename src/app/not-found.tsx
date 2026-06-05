@@ -4,17 +4,19 @@ import { m } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLiteMotion } from "@/lib/useLiteMotion";
 
 export default function NotFound() {
   const router = useRouter();
+  const useLite = useLiteMotion();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
       {/* Glowing 404 */}
       <m.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        initial={useLite ? false : { opacity: 0, scale: 0.8 }}
+        animate={useLite ? undefined : { opacity: 1, scale: 1 }}
+        transition={useLite ? undefined : { duration: 0.6, ease: "easeOut" }}
         className="relative mb-8"
       >
         <span className="text-[10rem] sm:text-[14rem] font-black leading-none tracking-tighter gradient-text select-none">
@@ -31,9 +33,9 @@ export default function NotFound() {
 
       {/* Message */}
       <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        initial={useLite ? false : { opacity: 0, y: 20 }}
+        animate={useLite ? undefined : { opacity: 1, y: 0 }}
+        transition={useLite ? undefined : { duration: 0.5, delay: 0.2 }}
       >
         <h1 className="text-2xl sm:text-3xl font-bold mb-3">Page not found</h1>
         <p className="text-muted-foreground max-w-md mx-auto mb-10 leading-relaxed">
@@ -43,9 +45,9 @@ export default function NotFound() {
 
       {/* Actions */}
       <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.35 }}
+        initial={useLite ? false : { opacity: 0, y: 20 }}
+        animate={useLite ? undefined : { opacity: 1, y: 0 }}
+        transition={useLite ? undefined : { duration: 0.5, delay: 0.35 }}
         className="flex flex-wrap items-center justify-center gap-4"
       >
         <Link href="/" className="btn-gradient gap-2">

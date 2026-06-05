@@ -4,9 +4,11 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { AnimatePresence, m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useIsAppleMobileWebKit } from "@/lib/useIsAppleMobileWebKit";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -34,7 +36,8 @@ export default function Navbar() {
   });
   const pathname = usePathname();
   const normalizedPathname = normalizePath(pathname);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const isAppleMobileWebKit = useIsAppleMobileWebKit();
   const desktopNavRef = React.useRef<HTMLDivElement | null>(null);
   const linkRefs = React.useRef<Record<string, HTMLAnchorElement | null>>({});
 
@@ -100,7 +103,9 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ${
           scrolled
-            ? "bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm"
+            ? isAppleMobileWebKit
+              ? "bg-background/88 border-b border-border/50 shadow-sm"
+              : "bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm"
             : "bg-transparent border-b border-transparent"
         }`}
       >
@@ -177,7 +182,11 @@ export default function Navbar() {
         {isOpen && (
           <m.div
             key="mobile-menu"
-            className="fixed inset-0 z-[100] bg-background/90 backdrop-blur-sm md:backdrop-blur-2xl flex flex-col"
+            className={`fixed inset-0 z-[100] flex flex-col bg-background/90 ${
+              isAppleMobileWebKit
+                ? ""
+                : "backdrop-blur-sm md:backdrop-blur-2xl"
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

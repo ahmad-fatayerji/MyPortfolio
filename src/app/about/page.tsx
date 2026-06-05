@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { Code2, Layers, Wrench, Languages } from "lucide-react";
 import skillsData from "@/data/skills.json";
+import { useLiteMotion } from "@/lib/useLiteMotion";
 
 interface Skill {
   icon: string;
@@ -19,17 +20,19 @@ const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } =
   };
 
 export default function AboutPage() {
+  const useLite = useLiteMotion();
+
   return (
     <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={useLite ? false : { opacity: 0 }}
+      animate={useLite ? undefined : { opacity: 1 }}
+      transition={useLite ? undefined : { duration: 0.5 }}
       className="max-w-4xl mx-auto py-8 sm:py-16"
     >
       <m.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={useLite ? false : { opacity: 0, y: 20 }}
+        animate={useLite ? undefined : { opacity: 1, y: 0 }}
+        transition={useLite ? undefined : { duration: 0.5 }}
         className="text-center mb-16"
       >
         <h1 className="section-heading mb-4">
@@ -53,9 +56,9 @@ export default function AboutPage() {
           return (
             <m.div
               key={skill.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+              initial={useLite ? false : { opacity: 0, y: 20 }}
+              animate={useLite ? undefined : { opacity: 1, y: 0 }}
+              transition={useLite ? undefined : { duration: 0.4, delay: 0.3 + i * 0.1 }}
               className="glass-card gradient-border p-6 group"
             >
               <div className="flex items-center gap-3 mb-4">
