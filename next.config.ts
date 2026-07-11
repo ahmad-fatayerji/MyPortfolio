@@ -5,16 +5,6 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
 
-  // Optimize package imports for better tree-shaking
-  experimental: {
-    optimizePackageImports: [
-      "lucide-react",
-      "framer-motion",
-      "@radix-ui/react-navigation-menu",
-      "@radix-ui/react-slot",
-    ],
-  },
-
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
@@ -36,15 +26,6 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/_next/static/:path*",
         headers: [
           {
             key: "Cache-Control",
