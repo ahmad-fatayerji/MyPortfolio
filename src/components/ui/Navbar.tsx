@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, m } from "framer-motion";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useIsAppleMobileWebKit } from "@/lib/useIsAppleMobileWebKit";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
@@ -115,7 +116,8 @@ export default function Navbar() {
           </Link>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
             <button
               className="text-foreground p-1 relative z-50"
               onClick={() => setIsOpen((prev) => !prev)}
@@ -169,6 +171,10 @@ export default function Navbar() {
               );
             })}
           </div>
+
+          <div className="hidden md:flex">
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
 
@@ -196,7 +202,8 @@ export default function Navbar() {
               >
                 Ahmad <span className="gradient-text">FATAYERJI</span>
               </Link>
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
                 <button
                   className="text-foreground p-1"
                   onClick={() => setIsOpen(false)}

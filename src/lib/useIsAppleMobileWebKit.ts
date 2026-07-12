@@ -12,11 +12,8 @@ function detectAppleMobileWebKit() {
   const isIPadOS = platform === "MacIntel" && maxTouchPoints > 1;
   const isAppleMobile = isIOSDevice || isIPadOS;
   const isWebKit = /WebKit/i.test(userAgent);
-  const isAltIOSBrowser = /CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo/i.test(
-    userAgent,
-  );
 
-  return isAppleMobile && isWebKit && !isAltIOSBrowser;
+  return isAppleMobile && isWebKit;
 }
 
 export { detectAppleMobileWebKit };
