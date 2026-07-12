@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   trailingSlash: true,
   reactStrictMode: true,
+  allowedDevOrigins: ["192.168.1.4"],
 
   // Compiler optimizations
   compiler: {

@@ -24,14 +24,11 @@ export function ThemeToggle() {
     const isDark = resolvedTheme === "dark";
     const nextTheme = isDark ? "light" : "dark";
 
-    setTheme(nextTheme);
-
     if (!isAppleMobileWebKit) {
+      setTheme(nextTheme);
       return;
     }
 
-    document.documentElement.classList.toggle("dark", nextTheme === "dark");
-    document.documentElement.style.colorScheme = nextTheme;
     window.localStorage.setItem("theme", nextTheme);
 
     if (reloadTimeoutRef.current) {
@@ -40,7 +37,7 @@ export function ThemeToggle() {
 
     reloadTimeoutRef.current = window.setTimeout(() => {
       window.location.reload();
-    }, 120);
+    }, 0);
   };
 
   return (
