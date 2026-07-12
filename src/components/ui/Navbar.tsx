@@ -104,8 +104,8 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ${
           scrolled
             ? isAppleMobileWebKit
-              ? "bg-background/88 border-b border-border/50 shadow-sm"
-              : "bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm"
+              ? "bg-background/95 md:bg-background/88 border-b border-border/50 shadow-sm"
+              : "bg-background/95 md:bg-background/70 md:backdrop-blur-xl border-b border-border/50 shadow-sm"
             : "bg-transparent border-b border-transparent"
         }`}
       >
