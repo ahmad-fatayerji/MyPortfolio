@@ -10,6 +10,36 @@
     "track": "main"
   },
   {
+    "id": "glampingboat-freelance-platform",
+    "title": "Freelance Web Platform Developer",
+    "organization": "Les Cloches de Penchot · Boisse-Penchot, France",
+    "description": "Developing an ongoing boat rental and glamping reservation platform with multilingual public pages, user accounts, booking workflows, availability management, and an admin back office. Implementing PostgreSQL persistence with Prisma, NextAuth authentication, email flows, Stripe-ready payment handling, reservation pricing, customer profiles, cancellation and manual payment tools, and containerized deployment support.",
+    "type": "freelance",
+    "startDate": "2026-06",
+    "endDate": null,
+    "track": "glampingboat-freelance"
+  },
+  {
+    "id": "alchaar-pharmacy-website",
+    "title": "Freelance Website Developer",
+    "organization": "AlChaar Pharmacy",
+    "description": "Developing the public website for AlChaar Pharmacy, extending the work started with the pharmacy kiosk platform into a customer-facing web presence. Building the initial Next.js and TypeScript foundation with bilingual branding, opening-hours and contact presentation, responsive styling, and a structure ready for the full pharmacy website launch.",
+    "type": "freelance",
+    "startDate": "2026-06",
+    "endDate": null,
+    "track": "alchaar-pharmacy-website"
+  },
+  {
+    "id": "empowered-futures-tech-innovation-lead",
+    "title": "Tech and Innovation Lead",
+    "organization": "Empowered Futures",
+    "description": "Volunteering as Tech and Innovation Lead, supporting the organization's digital and technical initiatives. Contributing technical direction, product thinking, and implementation support for tools and systems that help the team operate and grow its impact.",
+    "type": "volunteering",
+    "startDate": "2026-06",
+    "endDate": null,
+    "track": "empowered-futures-volunteering"
+  },
+  {
     "id": "bachelors-computer-science",
     "title": "Bachelor's degree in Computer Science",
     "organization": "Nantes Université",
@@ -18,6 +48,36 @@
     "startDate": "2022-09",
     "endDate": "2025-06",
     "track": "main"
+  },
+  {
+    "id": "alchaar-pharmacy-kiosk",
+    "title": "Pharmacy Kiosk Platform",
+    "organization": "AlChaar Pharmacy",
+    "description": "Built a kiosk-optimized ordering platform for a pharmacy, with a touch-friendly customer interface, multilingual support, product browsing, filtering, cart management, and order submission. Developed an admin dashboard for categories, filters, products, settings, stock, sales, and order management. Implemented PostgreSQL persistence with Prisma, real-time order updates through server-sent events, Excel/CSV product import and export, image handling, and Docker-based deployment with backup and restore scripts.",
+    "type": "freelance",
+    "startDate": "2024-06",
+    "endDate": "2024-08",
+    "track": "alchaar-pharmacy-kiosk"
+  },
+  {
+    "id": "adhoc-international-web-platform",
+    "title": "Web Platform Project",
+    "organization": "AD HOC International",
+    "description": "Built a full-stack corporate web platform for a multidisciplinary architecture, engineering, and construction firm. Developed the public portfolio website and an authenticated admin area for managing projects, images, and published content. Integrated PostgreSQL with Prisma, MinIO/S3-style object storage, secure admin sessions with OTP flows, contact email handling, analytics consent tracking, and containerized deployment workflows.",
+    "type": "freelance",
+    "startDate": "2025-06",
+    "endDate": "2025-09",
+    "track": "adhoc-international-project"
+  },
+  {
+    "id": "software-engineering-intern-les-cloches-de-penchot",
+    "title": "Software Engineering Intern",
+    "organization": "Les Cloches de Penchot · Boisse-Penchot, France",
+    "description": "Analyzed functional requirements and designed a software solution for business management and service bookings. Designed a modular application architecture with presentation, booking, and request-management components. Implemented key features including multilingual support, structured forms, and automated user-request workflows.",
+    "type": "internship",
+    "startDate": "2025-04",
+    "endDate": "2025-08",
+    "track": "les-cloches-de-penchot-internship"
   },
   {
     "id": "french-baccalaureate",
