@@ -364,3 +364,148 @@ html.ios-safari .gradient-mesh::after {
 html.ios-safari .noise-overlay {
   opacity: 0.008;
 }
+
+/* Career graph: measured nodes keep SVG rails aligned with variable-height cards. */
+.career-row {
+  display: block;
+}
+
+.career-graph-cell {
+  display: none;
+}
+
+.career-graph-svg {
+  display: none;
+}
+
+.career-card {
+  position: relative;
+  border-top: 1px solid hsl(var(--border) / 0.75);
+  background: linear-gradient(
+    90deg,
+    hsl(var(--card) / 0.72),
+    hsl(var(--card) / 0.18) 72%,
+    transparent
+  );
+  padding: 1.15rem 0.5rem 1.5rem 1rem;
+  box-shadow: inset 2px 0 0 var(--career-color);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    padding-left 180ms ease;
+}
+
+.career-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.career-mobile-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid hsl(var(--border) / 0.65);
+  padding: 0 0.25rem 0.65rem;
+}
+
+.career-mobile-tracks {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: none;
+}
+
+.career-mobile-track {
+  display: block;
+  width: 1.75rem;
+  height: 0.22rem;
+  border-radius: 999px;
+}
+
+.career-card:hover {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--card) / 0.92),
+    hsl(var(--card) / 0.28) 72%,
+    transparent
+  );
+  padding-left: 1.2rem;
+}
+
+.career-node {
+  --career-lane-gap: min(
+    1.15rem,
+    calc(2.75rem / max(1, var(--career-lane-count)))
+  );
+  left: calc(0.8rem + var(--career-lane) * var(--career-lane-gap));
+}
+
+.career-node-connector {
+  --career-lane-gap: min(
+    1.15rem,
+    calc(2.75rem / max(1, var(--career-lane-count)))
+  );
+  left: calc(0.8rem + var(--career-lane) * var(--career-lane-gap));
+  right: 0;
+  opacity: 0.32;
+}
+
+@media (min-width: 768px) {
+  .career-row {
+    display: grid;
+    grid-template-columns: 9.5rem 10rem minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .career-date {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 1.25rem;
+    text-align: right;
+  }
+
+  .career-graph-cell {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .career-graph-svg {
+    display: block;
+  }
+
+  .career-content-grid {
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+    gap: 1.25rem;
+  }
+
+  .career-card {
+    padding: 1.35rem 1rem 1.75rem 1.4rem;
+  }
+
+  .career-node {
+    --career-lane-gap: min(
+      3.5rem,
+      calc(7rem / max(1, var(--career-lane-count)))
+    );
+    left: calc(1.25rem + var(--career-lane) * var(--career-lane-gap));
+  }
+
+  .career-node-connector {
+    --career-lane-gap: min(
+      3.5rem,
+      calc(7rem / max(1, var(--career-lane-count)))
+    );
+    left: calc(1.25rem + var(--career-lane) * var(--career-lane-gap));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-card {
+    transition: none;
+  }
+}
