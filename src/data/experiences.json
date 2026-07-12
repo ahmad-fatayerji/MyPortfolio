@@ -1,33 +1,31 @@
 [
   {
-    "id": 1,
-    "date": "September 2025 - Present",
+    "id": "masters-software-engineering",
     "title": "Master's degree in Software Engineering",
-    "company": "Nantes Université",
+    "organization": "Nantes Université",
     "description": "Pursuing a Master's degree in Software Engineering with a focus on software architecture, software testing, formal verification, concurrent and distributed systems, and large-scale web and cloud technologies.",
     "type": "education",
-    "branch": 0,
-    "parallel": false
+    "startDate": "2025-09",
+    "endDate": null,
+    "track": "main"
   },
   {
-    "id": 2,
-    "date": "September 2022 - June 2025",
+    "id": "bachelors-computer-science",
     "title": "Bachelor's degree in Computer Science",
-    "company": "Nantes Université",
+    "organization": "Nantes Université",
     "description": "Bachelor's degree in Computer Science, focusing on software development, algorithms, data structures, and modern technologies. Hands-on projects and research to enhance problem-solving and programming skills.",
     "type": "education",
-    "branch": 0,
-    "parallel": false
+    "startDate": "2022-09",
+    "endDate": "2025-06",
+    "track": "main"
   },
   {
-    "id": 3,
-    "date": "June 2022",
+    "id": "french-baccalaureate",
     "title": "French Baccalaureate",
-    "company": "Lycée Abdel Kader",
+    "organization": "Lycée Abdel Kader",
     "description": "Graduated from school.",
-    "type": "milestone",
-    "branch": 0,
-    "parallel": false
+    "type": "education",
+    "startDate": "2022-06",
+    "track": "main"
   }
 ]
-  

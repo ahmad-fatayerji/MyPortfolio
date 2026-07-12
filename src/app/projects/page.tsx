@@ -13,14 +13,14 @@ export default function ProjectsPage() {
   return (
     <m.div
       initial={useLite ? false : { opacity: 0 }}
-      animate={useLite ? undefined : { opacity: 1 }}
-      transition={useLite ? undefined : { duration: 0.5 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: useLite ? 0 : 0.5 }}
       className="max-w-4xl mx-auto py-8"
     >
       <m.div
         initial={useLite ? false : { opacity: 0, y: 20 }}
-        animate={useLite ? undefined : { opacity: 1, y: 0 }}
-        transition={useLite ? undefined : { duration: 0.5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: useLite ? 0 : 0.5 }}
         className="text-center mb-16"
       >
         <h1 className="section-heading mb-4">
@@ -35,8 +35,8 @@ export default function ProjectsPage() {
         {projects.length === 0 ? (
           <m.p
             initial={useLite ? false : { opacity: 0 }}
-            animate={useLite ? undefined : { opacity: 1 }}
-            transition={useLite ? undefined : { duration: 0.3 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: useLite ? 0 : 0.3 }}
             className="text-center text-muted-foreground"
           >
             No projects found.
@@ -46,8 +46,11 @@ export default function ProjectsPage() {
             <m.div
               key={index}
               initial={useLite ? false : { opacity: 0, y: 20 }}
-              animate={useLite ? undefined : { opacity: 1, y: 0 }}
-              transition={useLite ? undefined : { duration: 0.4, delay: index * 0.1 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: useLite ? 0 : 0.4,
+                delay: useLite ? 0 : index * 0.1,
+              }}
             >
               <ProjectCard project={project} />
             </m.div>
