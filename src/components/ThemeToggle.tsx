@@ -24,9 +24,8 @@ export function ThemeToggle() {
     const isDark = resolvedTheme === "dark";
     const nextTheme = isDark ? "light" : "dark";
 
-    setTheme(nextTheme);
-
     if (!isAppleMobileWebKit) {
+      setTheme(nextTheme);
       return;
     }
 
@@ -38,7 +37,7 @@ export function ThemeToggle() {
 
     reloadTimeoutRef.current = window.setTimeout(() => {
       window.location.reload();
-    }, 80);
+    }, 0);
   };
 
   return (
