@@ -23,6 +23,24 @@ const nextConfig: NextConfig = {
 
   // Add cache headers for static assets
   async headers() {
+    if (process.env.NODE_ENV !== "production") {
+      return [
+        {
+          source: "/:path*",
+          headers: [
+            {
+              key: "Cache-Control",
+              value: "no-store, max-age=0",
+            },
+            {
+              key: "Clear-Site-Data",
+              value: '"cache"',
+            },
+          ],
+        },
+      ];
+    }
+
     return [
       {
         source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp)",
@@ -35,15 +53,6 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/:all*(woff|woff2|ttf|otf|eot)",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/:all*(js|css)",
         headers: [
           {
             key: "Cache-Control",

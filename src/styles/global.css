@@ -364,3 +364,118 @@ html.ios-safari .gradient-mesh::after {
 html.ios-safari .noise-overlay {
   opacity: 0.008;
 }
+
+/* Career graph: measured nodes keep SVG rails aligned with variable-height cards. */
+.career-row {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  align-items: start;
+}
+
+.career-graph-cell {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.career-card {
+  position: relative;
+  border-top: 1px solid hsl(var(--border) / 0.75);
+  background: linear-gradient(
+    90deg,
+    hsl(var(--card) / 0.72),
+    hsl(var(--card) / 0.18) 72%,
+    transparent
+  );
+  padding: 1.15rem 0.5rem 1.5rem 1rem;
+  box-shadow: inset 2px 0 0 var(--career-color);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    padding-left 180ms ease;
+}
+
+.career-content-grid {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.career-card:hover {
+  border-color: hsl(var(--primary) / 0.35);
+  background: linear-gradient(
+    90deg,
+    hsl(var(--card) / 0.92),
+    hsl(var(--card) / 0.28) 72%,
+    transparent
+  );
+  padding-left: 1.2rem;
+}
+
+.career-node {
+  --career-lane-gap: min(
+    1.15rem,
+    calc(2.75rem / max(1, var(--career-lane-count)))
+  );
+  left: calc(0.8rem + var(--career-lane) * var(--career-lane-gap));
+}
+
+.career-node-connector {
+  --career-lane-gap: min(
+    1.15rem,
+    calc(2.75rem / max(1, var(--career-lane-count)))
+  );
+  left: calc(0.8rem + var(--career-lane) * var(--career-lane-gap));
+  right: 0;
+  opacity: 0.32;
+}
+
+@media (min-width: 768px) {
+  .career-row {
+    grid-template-columns: 9.5rem 10rem minmax(0, 1fr);
+  }
+
+  .career-date {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 1.25rem;
+    text-align: right;
+  }
+
+  .career-graph-cell {
+    grid-column: 2;
+  }
+
+  .career-content-grid {
+    grid-column: 3;
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+    gap: 1.25rem;
+  }
+
+  .career-card {
+    padding: 1.35rem 1rem 1.75rem 1.4rem;
+  }
+
+  .career-node {
+    --career-lane-gap: min(
+      3.5rem,
+      calc(7rem / max(1, var(--career-lane-count)))
+    );
+    left: calc(1.25rem + var(--career-lane) * var(--career-lane-gap));
+  }
+
+  .career-node-connector {
+    --career-lane-gap: min(
+      3.5rem,
+      calc(7rem / max(1, var(--career-lane-count)))
+    );
+    left: calc(1.25rem + var(--career-lane) * var(--career-lane-gap));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-card {
+    transition: none;
+  }
+}

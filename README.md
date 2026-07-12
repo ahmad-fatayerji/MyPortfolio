@@ -55,6 +55,15 @@ npm run dev:clean:lan
 - src/lib: Utility functions
 - src/styles: Global CSS with Tailwind configuration
 
+### Editing Career History
+
+Career entries live in `src/data/experiences.json`. Dates use `YYYY-MM`,
+`endDate: null` means an ongoing experience, and milestones omit `endDate`.
+Use `track: "main"` for the primary rail. To add a parallel experience, give
+it any other track name. Every non-main track automatically forks from and
+merges back into `main`. Lanes, colors, ordering, date labels, and fork/merge
+paths are generated automatically.
+
 ## 🎨 Features
 
 - Responsive Design: Optimized for desktop, tablet, and mobile devices
