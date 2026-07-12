@@ -38,6 +38,7 @@ export default function Navbar() {
   const normalizedPathname = normalizePath(pathname);
   const prefersReducedMotion = usePrefersReducedMotion();
   const isAppleMobileWebKit = useIsAppleMobileWebKit();
+  const useLiteMotion = prefersReducedMotion || isAppleMobileWebKit;
   const desktopNavRef = React.useRef<HTMLDivElement | null>(null);
   const linkRefs = React.useRef<Record<string, HTMLAnchorElement | null>>({});
 
@@ -144,7 +145,8 @@ export default function Navbar() {
                   height: indicator.height,
                 }}
                 transition={{
-                  type: "spring",
+                  duration: useLiteMotion ? 0 : undefined,
+                  type: useLiteMotion ? undefined : "spring",
                   stiffness: 350,
                   damping: 30,
                 }}
@@ -191,7 +193,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.16 }}
+            transition={{ duration: useLiteMotion ? 0 : 0.16 }}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4">
@@ -217,12 +219,12 @@ export default function Navbar() {
             {/* Links */}
             <m.div
               className="flex-1 flex flex-col items-center justify-center gap-8"
-              initial={{ y: prefersReducedMotion ? 0 : 12, opacity: 0 }}
+              initial={{ y: useLiteMotion ? 0 : 12, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: prefersReducedMotion ? 0 : 8, opacity: 0 }}
+              exit={{ y: useLiteMotion ? 0 : 8, opacity: 0 }}
               transition={{
-                duration: prefersReducedMotion ? 0 : 0.2,
-                delay: prefersReducedMotion ? 0 : 0.04,
+                duration: useLiteMotion ? 0 : 0.2,
+                delay: useLiteMotion ? 0 : 0.04,
               }}
             >
               {navLinks.map((link) => {
