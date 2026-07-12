@@ -57,8 +57,11 @@ npm run dev:clean:lan
 
 ### Editing Career History
 
-Career entries live in `src/data/experiences.json`. Dates use `YYYY-MM`,
-`endDate: null` means an ongoing experience, and milestones omit `endDate`.
+Career entries live in `src/data/experiences.json`. Dates use `YYYY-MM`.
+Supported types are `education`, `volunteering`, `internship`, `job`, and
+`freelance`. Use `endDate: null` for an ongoing experience, or omit `endDate`
+for a single-date entry.
+
 Use `track: "main"` for the primary rail. To add a parallel experience, give
 it any other track name. Every non-main track automatically forks from and
 merges back into `main`. Lanes, colors, ordering, date labels, and fork/merge

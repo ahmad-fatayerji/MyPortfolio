@@ -15,26 +15,16 @@
     "organization": "Nantes Université",
     "description": "Bachelor's degree in Computer Science, focusing on software development, algorithms, data structures, and modern technologies. Hands-on projects and research to enhance problem-solving and programming skills.",
     "type": "education",
-    "startDate": "2024-02",
-    "endDate": "2024-08",
+    "startDate": "2022-09",
+    "endDate": "2025-06",
     "track": "main"
-  },
-  {
-    "id": "example-software-internship",
-    "title": "Example Software Engineering Internship",
-    "organization": "Example Company",
-    "description": "Temporary example entry for previewing how a parallel career branch forks from and merges back into the main timeline.",
-    "type": "internship",
-    "startDate": "2024-02",
-    "endDate": "2024-08",
-    "track": "example-internship"
   },
   {
     "id": "french-baccalaureate",
     "title": "French Baccalaureate",
     "organization": "Lycée Abdel Kader",
     "description": "Graduated from school.",
-    "type": "milestone",
+    "type": "education",
     "startDate": "2022-06",
     "track": "main"
   }

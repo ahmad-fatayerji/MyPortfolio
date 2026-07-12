@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import {
-  Award,
   BriefcaseBusiness,
   Code2,
   FolderGit2,
   GraduationCap,
+  Handshake,
 } from "lucide-react";
 import experiences from "@/data/experiences.json";
 import {
@@ -21,14 +21,14 @@ import {
 const career = parseCareerData(experiences);
 const careerRows = career.entries.reduce<CareerEntry[][]>((rows, entry) => {
   const rangeEnd =
-    entry.endDate === null ? "present" : (entry.endDate ?? "milestone");
+    entry.endDate === null ? "present" : (entry.endDate ?? "single");
   const rangeKey = `${entry.startDate}:${rangeEnd}`;
   const matchingRow = rows.find(
     ([candidate]) => {
       const candidateEnd =
         candidate.endDate === null
           ? "present"
-          : (candidate.endDate ?? "milestone");
+          : (candidate.endDate ?? "single");
       return `${candidate.startDate}:${candidateEnd}` === rangeKey;
     },
   );
@@ -43,10 +43,10 @@ const typeMeta: Record<
   { icon: React.ComponentType<{ className?: string }> }
 > = {
   education: { icon: GraduationCap },
+  volunteering: { icon: Handshake },
   internship: { icon: Code2 },
-  work: { icon: BriefcaseBusiness },
-  project: { icon: FolderGit2 },
-  milestone: { icon: Award },
+  job: { icon: BriefcaseBusiness },
+  freelance: { icon: FolderGit2 },
 };
 
 interface GraphNode {
@@ -88,7 +88,7 @@ function CareerGraph({
   return (
     <svg
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 overflow-visible"
+      className="career-graph-svg pointer-events-none absolute inset-0 z-0 overflow-visible"
       width={measurements.width}
       height={measurements.height}
       viewBox={`0 0 ${measurements.width} ${measurements.height}`}
@@ -151,32 +151,27 @@ function CareerGraph({
 function CareerCard({ entry, color }: { entry: CareerEntry; color: string }) {
   const meta = typeMeta[entry.type];
   const Icon = meta.icon;
-  const dateLabel = formatCareerRange(entry);
 
   return (
     <article
       className="career-card group"
-      style={{ "--career-color": color } as React.CSSProperties}
+      style={
+        {
+          "--career-color": color,
+          borderTopColor: `${color}42`,
+        } as React.CSSProperties
+      }
     >
-      <div className="flex flex-wrap items-center gap-2 md:hidden">
-        <time
-          dateTime={entry.startDate}
-          className="text-xs font-medium tracking-wide text-muted-foreground"
-        >
-          {dateLabel}
-        </time>
-      </div>
-
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3 sm:gap-4">
         <div
-          className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-xl border"
+          className="mt-0.5 flex h-9 w-9 flex-none items-center justify-center rounded-xl border sm:h-10 sm:w-10"
           style={{
             color,
             borderColor: `${color}38`,
             backgroundColor: `${color}12`,
           }}
         >
-          <Icon className="h-5 w-5" />
+          <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
         </div>
 
         <div className="min-w-0 flex-1">
@@ -185,7 +180,10 @@ function CareerCard({ entry, color }: { entry: CareerEntry; color: string }) {
               <h3 className="text-base font-semibold leading-snug text-card-foreground sm:text-lg">
                 {entry.title}
               </h3>
-              <p className="mt-1 text-sm font-medium text-primary">
+              <p
+                className="mt-1 text-sm font-medium"
+                style={{ color }}
+              >
                 {entry.organization}
               </p>
             </div>
@@ -255,12 +253,8 @@ export default function CareerTimeline() {
   }, []);
 
   return (
-    <section className="px-1 py-16 sm:px-4 sm:py-24" aria-labelledby="career-heading">
-      <div className="mx-auto mb-14 max-w-2xl text-center sm:mb-20">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-          <FolderGit2 className="h-3.5 w-3.5" />
-          git log --career
-        </div>
+    <section className="px-0 py-12 sm:px-4 sm:py-24" aria-labelledby="career-heading">
+      <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-20">
         <h2 id="career-heading" className="section-heading mb-4">
           Career <span className="gradient-text">History</span>
         </h2>
@@ -323,6 +317,29 @@ export default function CareerTimeline() {
               </div>
 
               <div className="career-content-grid">
+                <div className="career-mobile-meta md:hidden">
+                  <time
+                    dateTime={representative.startDate}
+                    className="text-xs font-semibold tracking-wide text-muted-foreground"
+                  >
+                    {dateLabel}
+                  </time>
+                  <div
+                    className="career-mobile-tracks"
+                    aria-label={`${row.length} ${row.length === 1 ? "path" : "parallel paths"}`}
+                  >
+                    {row.map((entry) => {
+                      const track = career.tracks.get(entry.track)!;
+                      return (
+                        <span
+                          key={entry.id}
+                          className="career-mobile-track"
+                          style={{ backgroundColor: track.color }}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
                 {row.map((entry) => {
                   const track = career.tracks.get(entry.track)!;
                   return (

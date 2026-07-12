@@ -32,10 +32,6 @@ const nextConfig: NextConfig = {
               key: "Cache-Control",
               value: "no-store, max-age=0",
             },
-            {
-              key: "Clear-Site-Data",
-              value: '"cache"',
-            },
           ],
         },
       ];

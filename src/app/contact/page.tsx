@@ -35,14 +35,14 @@ export default function ContactPage() {
   return (
     <m.div
       initial={useLite ? false : { opacity: 0 }}
-      animate={useLite ? undefined : { opacity: 1 }}
-      transition={useLite ? undefined : { duration: 0.5 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: useLite ? 0 : 0.5 }}
       className="max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
     >
       <m.div
         initial={useLite ? false : { opacity: 0, y: 20 }}
-        animate={useLite ? undefined : { opacity: 1, y: 0 }}
-        transition={useLite ? undefined : { duration: 0.5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: useLite ? 0 : 0.5 }}
         className="text-center mb-12"
       >
         <h1 className="section-heading mb-4">
@@ -56,16 +56,19 @@ export default function ContactPage() {
 
       <m.div
         initial={useLite ? false : { opacity: 0, y: 20 }}
-        animate={useLite ? undefined : { opacity: 1, y: 0 }}
-        transition={useLite ? undefined : { duration: 0.5, delay: 0.2 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: useLite ? 0 : 0.5, delay: useLite ? 0 : 0.2 }}
         className="space-y-4"
       >
         {contactLinks.map((item, i) => (
           <m.div
             key={item.label}
             initial={useLite ? false : { opacity: 0, x: -20 }}
-            animate={useLite ? undefined : { opacity: 1, x: 0 }}
-            transition={useLite ? undefined : { duration: 0.4, delay: 0.3 + i * 0.1 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: useLite ? 0 : 0.4,
+              delay: useLite ? 0 : 0.3 + i * 0.1,
+            }}
           >
             <Link
               href={item.href}

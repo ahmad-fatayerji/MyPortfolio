@@ -1,9 +1,9 @@
 export const careerTypes = [
   "education",
+  "volunteering",
   "internship",
-  "work",
-  "project",
-  "milestone",
+  "job",
+  "freelance",
 ] as const;
 
 export type CareerType = (typeof careerTypes)[number];
@@ -94,9 +94,6 @@ function parseEntry(value: unknown, index: number): CareerEntry {
     }
   }
 
-  if (type === "milestone" && endDateValue !== undefined) {
-    throw new Error(`${context}: milestones must omit "endDate".`);
-  }
   const endDate: string | null | undefined =
     typeof endDateValue === "string" || endDateValue === null
       ? endDateValue
@@ -151,9 +148,7 @@ export function parseCareerData(raw: unknown): CareerLayout {
 
   const tracks = new Map<string, CareerTrack>();
   for (const [trackId, trackEntries] of grouped) {
-    const ongoing = trackEntries.some(
-      (entry) => entry.type !== "milestone" && entry.endDate === null,
-    );
+    const ongoing = trackEntries.some((entry) => entry.endDate === null);
     const finiteEnds = trackEntries.map((entry) =>
       entry.endDate === undefined ? dateValue(entry.startDate) : entry.endDate === null
         ? Number.POSITIVE_INFINITY
@@ -229,7 +224,7 @@ export function formatCareerDate(value: string) {
 
 export function formatCareerRange(entry: CareerEntry) {
   const start = formatCareerDate(entry.startDate);
-  if (entry.type === "milestone") return start;
+  if (entry.endDate === undefined) return start;
   const end = entry.endDate === null ? "Present" : formatCareerDate(entry.endDate!);
   return `${start} – ${end}`;
 }
