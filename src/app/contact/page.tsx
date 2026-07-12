@@ -37,7 +37,7 @@ export default function ContactPage() {
       initial={useLite ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: useLite ? 0 : 0.5 }}
-      className="max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
+      className="page-load-motion max-w-2xl mx-auto py-8 sm:py-16 text-foreground"
     >
       <m.div
         initial={useLite ? false : { opacity: 0, y: 20 }}

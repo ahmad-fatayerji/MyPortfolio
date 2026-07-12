@@ -365,6 +365,14 @@ html.ios-safari .noise-overlay {
   opacity: 0.008;
 }
 
+html.ios-page-static main .page-load-motion,
+html.ios-page-static main .page-load-motion * {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition-duration: 0ms !important;
+}
+
 /* Career graph: measured nodes keep SVG rails aligned with variable-height cards. */
 .career-row {
   display: block;

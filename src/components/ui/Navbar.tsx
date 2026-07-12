@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, m } from "framer-motion";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useIsAppleMobileWebKit } from "@/lib/useIsAppleMobileWebKit";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
@@ -103,8 +104,8 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300 ${
           scrolled
             ? isAppleMobileWebKit
-              ? "bg-background/88 border-b border-border/50 shadow-sm"
-              : "bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm"
+              ? "bg-background/95 md:bg-background/88 border-b border-border/50 shadow-sm"
+              : "bg-background/95 md:bg-background/70 md:backdrop-blur-xl border-b border-border/50 shadow-sm"
             : "bg-transparent border-b border-transparent"
         }`}
       >
@@ -115,7 +116,8 @@ export default function Navbar() {
           </Link>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
             <button
               className="text-foreground p-1 relative z-50"
               onClick={() => setIsOpen((prev) => !prev)}
@@ -169,6 +171,10 @@ export default function Navbar() {
               );
             })}
           </div>
+
+          <div className="hidden md:flex">
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
 
@@ -196,7 +202,8 @@ export default function Navbar() {
               >
                 Ahmad <span className="gradient-text">FATAYERJI</span>
               </Link>
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
                 <button
                   className="text-foreground p-1"
                   onClick={() => setIsOpen(false)}

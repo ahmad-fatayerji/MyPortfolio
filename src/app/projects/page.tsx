@@ -15,7 +15,7 @@ export default function ProjectsPage() {
       initial={useLite ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: useLite ? 0 : 0.5 }}
-      className="max-w-4xl mx-auto py-8"
+      className="page-load-motion max-w-4xl mx-auto py-8"
     >
       <m.div
         initial={useLite ? false : { opacity: 0, y: 20 }}
