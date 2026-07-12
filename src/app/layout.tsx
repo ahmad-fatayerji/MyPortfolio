@@ -28,6 +28,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`min-h-screen bg-background text-foreground antialiased ${inter.variable} font-sans`}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(()=>{try{const n=navigator;const ua=n.userAgent;const isAppleMobile=/iP(hone|ad|od)/i.test(ua)||(n.platform==="MacIntel"&&n.maxTouchPoints>1);if(isAppleMobile&&/WebKit/i.test(ua)){document.documentElement.classList.add("ios-page-static")}}catch(e){}})();`,
+          }}
+        />
         <ThemeProvider>
           {/* Animated gradient background */}
           <div className="gradient-mesh" />

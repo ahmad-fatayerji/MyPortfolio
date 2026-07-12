@@ -11,7 +11,7 @@ export default function NotFound() {
   const useLite = useLiteMotion();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
+    <div className="page-load-motion flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
       {/* Glowing 404 */}
       <m.div
         initial={useLite ? false : { opacity: 0, scale: 0.8 }}
