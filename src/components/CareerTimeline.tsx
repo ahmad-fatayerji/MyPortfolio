@@ -158,17 +158,20 @@ function CareerCard({ entry, color }: { entry: CareerEntry; color: string }) {
       style={
         {
           "--career-color": color,
-          borderTopColor: `${color}42`,
+          "--career-border": `${color}42`,
+          "--career-glow": `${color}14`,
+          "--career-tint": `${color}08`,
+          "--career-icon-bg": `${color}12`,
+          "--career-icon-hover": `${color}24`,
         } as React.CSSProperties
       }
     >
-      <div className="flex items-start gap-3 sm:gap-4">
+      <div className="relative z-10 flex items-start gap-3 sm:gap-4">
         <div
-          className="mt-0.5 flex h-9 w-9 flex-none items-center justify-center rounded-xl border sm:h-10 sm:w-10"
+          className="career-card-icon mt-0.5 flex h-9 w-9 flex-none items-center justify-center rounded-xl border sm:h-10 sm:w-10"
           style={{
             color,
             borderColor: `${color}38`,
-            backgroundColor: `${color}12`,
           }}
         >
           <Icon className="h-4 w-4 sm:h-5 sm:w-5" />

@@ -388,7 +388,8 @@ html.ios-page-static main .page-load-motion * {
 
 .career-card {
   position: relative;
-  border-top: 1px solid hsl(var(--border) / 0.75);
+  isolation: isolate;
+  border-top: 1px solid var(--career-border);
   background: linear-gradient(
     90deg,
     hsl(var(--card) / 0.72),
@@ -397,10 +398,28 @@ html.ios-page-static main .page-load-motion * {
   );
   padding: 1.15rem 0.5rem 1.5rem 1rem;
   box-shadow: inset 2px 0 0 var(--career-color);
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    padding-left 180ms ease;
+  transition: box-shadow 260ms ease, border-color 260ms ease;
+}
+
+.career-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at top left,
+    var(--career-glow),
+    var(--career-tint) 45%,
+    transparent 80%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.career-card-icon {
+  background-color: var(--career-icon-bg);
+  transition: background-color 260ms ease, box-shadow 260ms ease;
 }
 
 .career-content-grid {
@@ -432,14 +451,30 @@ html.ios-page-static main .page-load-motion * {
   border-radius: 999px;
 }
 
-.career-card:hover {
-  background: linear-gradient(
-    90deg,
-    hsl(var(--card) / 0.92),
-    hsl(var(--card) / 0.28) 72%,
-    transparent
-  );
-  padding-left: 1.2rem;
+@media (hover: hover) and (pointer: fine) {
+  .career-card:hover {
+    border-top-color: var(--career-color);
+    box-shadow:
+      inset 3px 0 0 var(--career-color),
+      0 8px 24px -12px var(--career-glow);
+  }
+
+  .career-card:hover::before {
+    opacity: 1;
+  }
+
+  .career-card:hover .career-card-icon {
+    background-color: var(--career-icon-hover);
+    box-shadow: 0 0 0 4px var(--career-tint);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-card,
+  .career-card::before,
+  .career-card-icon {
+    transition: none;
+  }
 }
 
 .career-node {
