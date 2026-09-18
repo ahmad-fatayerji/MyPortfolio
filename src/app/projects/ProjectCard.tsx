@@ -1,9 +1,11 @@
 import React from "react";
 import { Project } from "@/types/project";
 import Link from "next/link";
-import { ExternalLink, Github, Lock } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+  const isExternalLink = /^(https?:)?\/\//i.test(project.link ?? "");
+
   return (
     <div className="glass-card gradient-border p-6 group">
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -32,13 +34,15 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           {project.link && (
             <Link
               href={project.link}
+              target={isExternalLink ? "_blank" : undefined}
+              rel={isExternalLink ? "noopener noreferrer" : undefined}
               className="flex items-center justify-center w-10 h-10 rounded-xl border border-border/50 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
               aria-label="View project"
             >
               <ExternalLink className="w-4 h-4 text-muted-foreground" />
             </Link>
           )}
-          {project.code ? (
+          {project.code && (
             <Link
               href={project.code}
               target="_blank"
@@ -48,13 +52,6 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             >
               <Github className="w-4 h-4 text-muted-foreground" />
             </Link>
-          ) : (
-            <div
-              className="flex items-center justify-center w-10 h-10 rounded-xl border border-border/50 bg-card/30 opacity-40 cursor-not-allowed"
-              aria-label="Source code unavailable"
-            >
-              <Lock className="w-4 h-4 text-muted-foreground" />
-            </div>
           )}
         </div>
       </div>

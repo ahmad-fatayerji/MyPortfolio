@@ -1,33 +1,39 @@
 [
   {
+    "title": "Glamping Boat",
+    "description": "A multilingual boat rental and glamping platform with online reservations, availability checks, and customer accounts. Integrates Stripe checkout for deposits and full payments, with booking emails and an admin dashboard for managing reservations, blocked dates, customers, promotions, and refunds. Built with Next.js, TypeScript, and PostgreSQL, using Prisma for data access and NextAuth for authentication.",
+    "tags": ["Next.js", "TypeScript", "TailwindCSS", "Prisma ORM", "PostgreSQL", "NextAuth", "Stripe", "Docker"],
+    "link": "https://glampingboat.fr/"
+  },
+  {
     "title": "AD HOC International",
-    "description": "A corporate website for AD HOC International, a Beirut-based multidisciplinary architectural and engineering consultancy and construction firm. It showcases their services and a portfolio of their general contracting projects.",
+    "description": "A corporate website and project publishing platform for AD HOC International, a Beirut-based architecture, engineering, and construction firm. Showcases services and project galleries, with an admin dashboard for editing project details, managing images, and controlling publication. Built with Next.js, PostgreSQL, and MinIO, with email contact inquiries and automated deployment.",
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "CI/CD", "Podman/Docker", "MinIO", "PostgreSQL"],
     "link": "https://adhocint.com/",
     "code": "https://github.com/ahmad-fatayerji/adhocint"
   },
   {
     "title": "AlChaar-Pharmacy Kiosk",
-    "description": "Pharmacy Front Facing Kiosk",
+    "description": "A self-service ordering kiosk for AlChaar Pharmacy, with a touch-friendly interface in English and Arabic for browsing products, filtering categories, and placing orders. Includes an admin dashboard for managing the catalog, stock, and promotions, plus live order tracking and Excel/CSV product imports. Built with Next.js and PostgreSQL, with Docker deployment and automated backups before updates.",
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "Prisma ORM", "PostgreSQL", "Docker", "CI/CD"],
-    "code": "https://github.com/ahmad-fatayerji/alchaar-kiosk"
+    "link": "https://www.linkedin.com/posts/were-excited-to-introduce-our-new-interactive-share-7422192390469259265-RsC9/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEHd7tIBCZ32qjEgtScqvuH9FtWziXrG5c0"
   },
   {
     "title": "Next.js Website",
-    "description": "A portfolio website built using Next.js, TailwindCSS, and TypeScript.",
+    "description": "A responsive personal portfolio showcasing software projects, technical skills, and a branching career timeline that maps overlapping work, education, and volunteering. Features light and dark themes, Framer Motion animations, and project and experience content managed through JSON. Built with Next.js and TypeScript, with automated GitHub Actions deployment to a self-hosted Podman environment.",
     "tags": ["Next.js", "TailwindCSS", "TypeScript", "Framer Motion", "CI/CD", "Podman/Docker"],
     "link": "/",
     "code": "https://github.com/ahmad-fatayerji/MyPortfolio"
   },
   {
     "title": "MonBoTablo",
-    "description": "A Java application that processes coordinates to generate tablos using quadtree structures. It also includes a ternary tree variant, offering an alternative way to divide space. The app creates structured visual representations, making it useful for generating tablos and even artistic designs.",
+    "description": "A Java command-line application that turns coordinate and color instructions into geometric artwork using recursive spatial partitioning. Implements both quadtree and ternary tree variants, supports recoloring individual regions, and compresses the tree after recoloring. Exports the original and recolored compositions as PNG images alongside text representations of their tree structures.",
     "tags": ["Java", "Object-Oriented Programming"],
     "code": "https://github.com/ahmad-fatayerji/L3-ASD3"
   },
   {
     "title": "SimpleML Type Checker and Interpreter",
-    "description": "An OCaml project that implements a type checker and evaluator for a custom language called SimpleML. It supports integer and boolean operations, function calls, let bindings, conditionals, and includes extended features like floats, print statements, sequencing, and unit type. Built using Menhir, ocamllex, and dune.",
+    "description": "An OCaml implementation of SimpleML that takes source code through lexical analysis, parsing, static type checking, and interpretation. Checks variable types, function arguments, and return types before execution. Supports integer and floating-point arithmetic, booleans, conditionals, typed let bindings, function calls, sequencing, and integer output, with a lexer and parser built using ocamllex and Menhir.",
     "tags": ["OCaml", "Menhir", "Compiler", "Parser", "Functional Programming"],
     "code": "https://github.com/ahmad-fatayerji/L3-Ocaml"
   }
