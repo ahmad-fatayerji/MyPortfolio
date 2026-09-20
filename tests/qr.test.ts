@@ -149,6 +149,27 @@ test("origin validation rejects foreign and missing origins", () => {
   assert.throws(() => assertOrigin(null, "ahmadfatayerji.com"));
 });
 
+test("production accepts HTTPS www and apex origins while rejecting other origins", () => {
+  const previousMode = process.env.NODE_ENV;
+  const previousOrigin = process.env.SITE_ORIGIN;
+  Object.assign(process.env, { NODE_ENV: "production" });
+  try {
+    for (const configured of ["https://ahmadfatayerji.com", "https://www.ahmadfatayerji.com"]) {
+      process.env.SITE_ORIGIN = configured;
+      for (const origin of ["https://ahmadfatayerji.com", "https://www.ahmadfatayerji.com"]) {
+        assert.doesNotThrow(() => assertOrigin(origin, "127.0.0.1:3000"));
+      }
+      for (const origin of [null, "null", "invalid", "http://ahmadfatayerji.com", "http://www.ahmadfatayerji.com", "https://ahmadfatayerji.com:444", "https://evil.example", "https://admin.ahmadfatayerji.com", "https://ahmadfatayerji.com.evil.example", "https://www.www.ahmadfatayerji.com"]) {
+        assert.throws(() => assertOrigin(origin, "ahmadfatayerji.com"), /Invalid request origin/);
+      }
+    }
+  } finally {
+    if (previousMode === undefined) Reflect.deleteProperty(process.env, "NODE_ENV");
+    else Object.assign(process.env, { NODE_ENV: previousMode });
+    process.env.SITE_ORIGIN = previousOrigin;
+  }
+});
+
 test("PNG decodes to the permanent route URL and SVG has a quiet zone", async () => {
   const url = routeUrl("cv-fr");
   const png = PNG.sync.read(

@@ -79,9 +79,25 @@ export function routeUrl(slug: string) {
 
 export function assertOrigin(origin: string | null, host: string | null) {
   if (!origin) throw new QrInputError("Invalid request origin.");
-  const allowed =
-    process.env.NODE_ENV === "production"
-      ? origin === siteOrigin()
-      : new URL(origin).host === host;
+  let allowed = false;
+  if (process.env.NODE_ENV === "production") {
+    const canonical = new URL(siteOrigin());
+    const trustedOrigins = new Set([canonical.origin]);
+    // Both public HTTPS hostnames serve this site. Keep protocol and port exact;
+    // do not trust arbitrary subdomains or derive trust from proxy headers.
+    if (canonical.protocol === "https:") {
+      canonical.hostname = canonical.hostname.startsWith("www.")
+        ? canonical.hostname.slice(4)
+        : `www.${canonical.hostname}`;
+      trustedOrigins.add(canonical.origin);
+    }
+    allowed = trustedOrigins.has(origin);
+  } else {
+    try {
+      allowed = new URL(origin).host === host;
+    } catch {
+      // Malformed or opaque origins fail with the same safe validation message.
+    }
+  }
   if (!allowed) throw new QrInputError("Invalid request origin.");
 }

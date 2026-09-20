@@ -54,8 +54,9 @@ volume `ahmadfatayerji-qr-data`, with `:U` assigning ownership to container UID
 Do not delete volumes or use `compose down -v` during deployment.
 
 Keep `/admin/` and `/qr/` uncached at the reverse proxy and forward the original
-Host and Origin headers. Login requires HTTPS in production and validates the
-exact configured origin. Open admin through that canonical domain. Slashless
+Host and Origin headers. Login accepts the configured HTTPS origin and its
+`www`/non-`www` counterpart, with the same port. Other origins remain blocked.
+QR images continue using the configured canonical origin. Slashless
 links may first receive Next.js trailing-slash normalization; the final `/qr/1/`
 lookup always uses an uncached temporary redirect.
 
