@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 .claude
+
+# Runtime QR database and browser test artifacts
+/data/
+/test-results/

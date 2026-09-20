@@ -5,10 +5,18 @@ services:
       dockerfile: Dockerfile
     image: localhost/ahmadfatayerji-web:latest
     container_name: ahmadfatayerji-web
+    env_file:
+      - ${ADMIN_ENV_FILE:-/etc/ahmadfatayerji/admin.env}
     environment:
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: "1"
       PORT: "3000"
+      QR_DATA_DIR: /app/data
+    volumes:
+      - qr-data:/app/data
     ports:
       - "127.0.0.1:3000:3000"
     restart: unless-stopped
+
+volumes:
+  qr-data:

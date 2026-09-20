@@ -24,11 +24,17 @@ if [[ "${GIT_PULL:-0}" == "1" ]]; then
   git pull --ff-only origin "$GIT_REF"
 fi
 
-mkdir -p "$QUADLET_DIR"
-cp -f "$TEMPLATE_FILE" "$QUADLET_DIR/ahmadfatayerji-web.container"
+# Validate before building or changing the running service configuration.
+bash "$SCRIPT_ROOT/ops/write-admin-env.sh" --check
 
 echo "==> Building image"
 podman build -t localhost/ahmadfatayerji-web:latest .
+
+# Keep runtime secrets outside the checkout and image. Update only after a
+# successful build, so a build failure leaves the current configuration intact.
+QUADLET_DIR="$QUADLET_DIR" bash "$SCRIPT_ROOT/ops/write-admin-env.sh"
+unset ADMIN_PASSWORD_HASH SITE_ORIGIN
+cp -f "$TEMPLATE_FILE" "$QUADLET_DIR/ahmadfatayerji-web.container"
 
 echo "==> Reloading systemd user units"
 systemctl --user daemon-reload
