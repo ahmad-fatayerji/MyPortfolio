@@ -1,5 +1,7 @@
 # Ahmad FATAYERJI | Portfolio Website
 
+QR route admin setup and operations: [QR admin guide](ops/QR_ADMIN.md).
+
 Welcome to my personal portfolio! Built using modern web technologies, this site showcases my projects, skills, and experiences in software development.
 
 ## 🛠️ Technologies Used
