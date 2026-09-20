@@ -1,6 +1,6 @@
 {
   "name": "ahmadfatayerji-portfolio",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "private": true,
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('.next', { recursive: true, force: true })\"",
