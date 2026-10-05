@@ -4,6 +4,7 @@ import { passwordConfigured } from "@/lib/qr/security";
 import { listRoutes, nextSlug } from "@/lib/qr/store";
 import { siteOrigin } from "@/lib/qr/validation";
 import { AdminDashboard, LoginForm } from "./panel";
+import styles from "./admin.module.css";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 export default async function AdminPage() {
   if (!passwordConfigured())
     return (
-      <section className="mx-auto max-w-md rounded-2xl border bg-card p-8">
+      <section className={`${styles.workspace} mx-auto max-w-md rounded-md border bg-card p-6 sm:p-8`}>
         <h1 className="text-2xl font-semibold">
           Admin access is not configured
         </h1>
@@ -41,7 +42,7 @@ export default async function AdminPage() {
   } catch (error) {
     console.error("Admin storage unavailable", error);
     return (
-      <section role="alert" className="rounded-2xl border bg-card p-8">
+      <section role="alert" className={`${styles.workspace} rounded-md border bg-card p-6 sm:p-8`}>
         <h1 className="text-2xl font-semibold">
           Admin temporarily unavailable
         </h1>
