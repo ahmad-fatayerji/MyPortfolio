@@ -1,0 +1,30 @@
+.workspace {
+  /* Keep operational surfaces readable against the portfolio background. */
+  --muted-foreground: 230 10% 40%;
+  --destructive: 0 72% 42%;
+}
+
+.active,
+.success {
+  color: #166534;
+}
+
+.active {
+  border-color: #bbd8c3;
+  background: #f0f8f2;
+}
+
+:global(.dark) .workspace {
+  --muted-foreground: 228 10% 70%;
+  --destructive: 0 85% 75%;
+}
+
+:global(.dark) .active,
+:global(.dark) .success {
+  color: #a7e5bb;
+}
+
+:global(.dark) .active {
+  border-color: #355b41;
+  background: #182d20;
+}

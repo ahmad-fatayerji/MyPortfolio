@@ -21,6 +21,8 @@ test("admin manages permanent QR routes on desktop and mobile", async ({
   await expect(
     page.getByRole("heading", { name: "Your QR links" }),
   ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "No routes yet" })).toBeVisible();
+  await page.screenshot({ path: "test-results/qr-admin-empty.png", fullPage: true });
   const cookies = await page.context().cookies();
   const session = cookies.find((cookie) => cookie.name === "__Host-qr-admin");
   expect(session?.httpOnly).toBe(true);
@@ -151,6 +153,22 @@ test("admin manages permanent QR routes on desktop and mobile", async ({
     path: "test-results/qr-admin-desktop.png",
     fullPage: true,
   });
+  // Check both theme surfaces at desktop and narrow mobile widths.
+  for (const theme of ["light", "dark"] as const) {
+    await page.evaluate((value) => {
+      localStorage.setItem("theme", value);
+    }, theme);
+    await page.reload();
+    await expect(page.locator("html")).toHaveClass(new RegExp(`\\b${theme}\\b`));
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({ width, height: 1050 });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      await page.screenshot({
+        path: `test-results/qr-admin-${theme}-${width}.png`,
+        fullPage: true,
+      });
+    }
+  }
   await page.getByRole("button", { name: "Sign out" }).click();
   await expect(
     page.getByRole("heading", { name: "QR link admin" }),
