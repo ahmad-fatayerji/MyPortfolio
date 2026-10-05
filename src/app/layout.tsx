@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 import Navbar from "@/components/ui/Navbar";
+import { getSiteOrigin, siteName } from "@/lib/metadata";
 
 import "../styles/global.css";
 
@@ -15,7 +16,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ahmad FATAYERJI",
+  metadataBase: new URL(getSiteOrigin()),
+  title: siteName,
   description: "Ahmad FATAYERJI - Software Engineer based in France",
   icons: {
     icon: "/af_logo.svg",
