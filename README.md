@@ -1,6 +1,7 @@
 # Ahmad FATAYERJI | Portfolio Website
 
 QR route admin setup and operations: [QR admin guide](ops/QR_ADMIN.md).
+Page metadata and crawl configuration: [SEO guide](ops/SEO.md).
 
 Welcome to my personal portfolio! Built using modern web technologies, this site showcases my projects, skills, and experiences in software development.
 
