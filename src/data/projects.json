@@ -1,5 +1,12 @@
 [
   {
+    "title": "Veil",
+    "description": "A Windows desktop app for real-time collaborative notes, with a floating overlay that stays visible to the user while remaining hidden from compatible screen recordings and screen sharing. Features a shared rich-text editor, participant cursors, reusable session links, and a customizable always-on-top overlay. Built with Tauri, Rust, React, and TypeScript, using Yjs and WebRTC for collaboration and a self-hosted signaling server.",
+    "tags": ["Tauri", "Rust", "React", "TypeScript", "Yjs", "WebRTC", "Tiptap"],
+    "link": "https://github.com/ahmad-fatayerji/veil/releases/latest",
+    "code": "https://github.com/ahmad-fatayerji/veil"
+  },
+  {
     "title": "Glamping Boat",
     "description": "A multilingual boat rental and glamping platform with online reservations, availability checks, and customer accounts. Integrates Stripe checkout for deposits and full payments, with booking emails and an admin dashboard for managing reservations, blocked dates, customers, promotions, and refunds. Built with Next.js, TypeScript, and PostgreSQL, using Prisma for data access and NextAuth for authentication.",
     "tags": ["Next.js", "TypeScript", "TailwindCSS", "Prisma ORM", "PostgreSQL", "NextAuth", "Stripe", "Docker"],

@@ -31,6 +31,7 @@
     "items": [
       "Git",
       "Docker/Podman",
+      "Kubernetes",
       "CMake",
       "LaTeX",
       "Linux",
